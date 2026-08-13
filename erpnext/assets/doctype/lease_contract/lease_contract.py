@@ -33,6 +33,7 @@ class LeaseContract(Document):
 		)
 
 		amended_from: DF.Link | None
+		auto_post_monthly: DF.Check
 		amortization_schedule: DF.Table[LeaseAmortizationEntry]
 		annual_discount_rate: DF.Percent
 		asset_category: DF.Link | None
@@ -414,3 +415,30 @@ class LeaseContract(Document):
 		if self.commencement_journal_entry:
 			if frappe.db.get_value("Journal Entry", self.commencement_journal_entry, "docstatus") == 1:
 				frappe.get_doc("Journal Entry", self.commencement_journal_entry).cancel()
+
+
+def post_scheduled_lease_entries():
+	"""Monthly scheduler entry point.
+
+	Posts due interest/principal (or short-term expense) entries for submitted
+	Lease Contracts that opted in via ``auto_post_monthly``. Opt-in is per
+	contract and off by default: posting journal entries on a timer is a
+	deliberate choice, not something a lease should start doing on upgrade.
+	Errors on one contract never stop the rest.
+	"""
+	contracts = frappe.get_all(
+		"Lease Contract",
+		filters={"docstatus": 1, "auto_post_monthly": 1},
+		pluck="name",
+	)
+
+	for name in contracts:
+		try:
+			frappe.get_doc("Lease Contract", name).post_monthly_entries()
+			frappe.db.commit()
+		except Exception:
+			frappe.db.rollback()
+			frappe.log_error(
+				title=f"Scheduled lease posting failed for {name}",
+				message=frappe.get_traceback(with_context=True),
+			)

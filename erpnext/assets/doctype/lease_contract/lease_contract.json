@@ -40,6 +40,7 @@
   "initial_rou",
   "column_break_computed_2",
   "total_interest",
+  "auto_post_monthly",
   "schedule_section",
   "amortization_schedule",
   "commencement_journal_entry",
@@ -268,6 +269,13 @@
    "label": "Total Interest Over Term",
    "options": "Company:company:default_currency",
    "read_only": 1
+  },
+  {
+   "default": "0",
+   "description": "If enabled, the monthly scheduler posts due interest and principal entries for this contract. Leave unchecked to post manually.",
+   "fieldname": "auto_post_monthly",
+   "fieldtype": "Check",
+   "label": "Auto Post Monthly Entries"
   },
   {
    "fieldname": "schedule_section",

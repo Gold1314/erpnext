@@ -29,6 +29,7 @@ class RevenueContract(Document):
 		)
 
 		amended_from: DF.Link | None
+		auto_post_monthly: DF.Check
 		company: DF.Link
 		contract_date: DF.Date
 		cost_center: DF.Link | None
@@ -369,3 +370,29 @@ class RevenueContract(Document):
 		journal_entry.save()
 		journal_entry.submit()
 		return journal_entry
+
+
+def process_revenue_recognition():
+	"""Monthly scheduler entry point.
+
+	Posts due recognition entries for Active Revenue Contracts that opted in via
+	``auto_post_monthly``. Opt-in is per contract and off by default, mirroring
+	the lease module: revenue should not begin recognising itself on a timer
+	without an explicit decision. Errors on one contract never stop the rest.
+	"""
+	contracts = frappe.get_all(
+		"Revenue Contract",
+		filters={"docstatus": 1, "status": "Active", "auto_post_monthly": 1},
+		pluck="name",
+	)
+
+	for name in contracts:
+		try:
+			frappe.get_doc("Revenue Contract", name).post_recognition()
+			frappe.db.commit()
+		except Exception:
+			frappe.db.rollback()
+			frappe.log_error(
+				title=f"Scheduled revenue recognition failed for {name}",
+				message=frappe.get_traceback(with_context=True),
+			)

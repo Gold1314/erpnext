@@ -534,6 +534,8 @@ scheduler_events = {
 	"monthly_long": [
 		"erpnext.accounts.deferred_revenue.process_deferred_accounting",
 		"erpnext.accounts.utils.auto_create_exchange_rate_revaluation_monthly",
+		"erpnext.accounts.doctype.revenue_contract.revenue_contract.process_revenue_recognition",
+		"erpnext.assets.doctype.lease_contract.lease_contract.post_scheduled_lease_entries",
 	],
 }
 

@@ -20,6 +20,7 @@
   "deferred_revenue_account",
   "column_break_accounting",
   "cost_center",
+  "auto_post_monthly",
   "obligations_section",
   "obligations",
   "recognition_plan_section",
@@ -127,6 +128,13 @@
    "fieldtype": "Link",
    "label": "Cost Center",
    "options": "Cost Center"
+  },
+  {
+   "default": "0",
+   "description": "If enabled, the monthly scheduler posts due revenue recognition entries for this contract. Leave unchecked to post manually.",
+   "fieldname": "auto_post_monthly",
+   "fieldtype": "Check",
+   "label": "Auto Post Recognition Monthly"
   },
   {
    "fieldname": "obligations_section",
