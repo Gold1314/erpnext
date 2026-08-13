@@ -1,0 +1,102 @@
+{
+ "actions": [],
+ "creation": "2026-08-13 10:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "obligation_idx",
+  "obligation_description",
+  "column_break_period",
+  "period_start",
+  "period_end",
+  "section_posting",
+  "amount",
+  "column_break_posting",
+  "posted",
+  "journal_entry"
+ ],
+ "fields": [
+  {
+   "description": "Row number of the obligation in the Obligations table this planned recognition belongs to.",
+   "fieldname": "obligation_idx",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Obligation Row",
+   "read_only": 1
+  },
+  {
+   "fieldname": "obligation_description",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Obligation",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_period",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Empty on a Point in Time obligation that has not been satisfied yet (recognized on event).",
+   "fieldname": "period_start",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Period Start",
+   "read_only": 1
+  },
+  {
+   "fieldname": "period_end",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Period End",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_posting",
+   "fieldtype": "Section Break",
+   "label": "Posting"
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Amount",
+   "options": "Company:company:default_currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_posting",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "posted",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Posted",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "journal_entry",
+   "fieldtype": "Link",
+   "label": "Journal Entry",
+   "no_copy": 1,
+   "options": "Journal Entry",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-08-13 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Accounts",
+ "name": "Revenue Recognition Entry",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
