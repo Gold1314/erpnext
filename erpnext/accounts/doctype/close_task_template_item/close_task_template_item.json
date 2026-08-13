@@ -1,0 +1,89 @@
+{
+ "actions": [],
+ "creation": "2026-08-13 10:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "task_title",
+  "task_type",
+  "depends_on_titles",
+  "column_break_task",
+  "owner_role",
+  "due_day_offset",
+  "auto_verify",
+  "section_break_instructions",
+  "instructions"
+ ],
+ "fields": [
+  {
+   "fieldname": "task_title",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Task Title",
+   "reqd": 1
+  },
+  {
+   "default": "Manual",
+   "fieldname": "task_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Task Type",
+   "options": "Manual\nPeriod Closing Voucher\nExchange Rate Revaluation\nDeferred Accounting\nBank Reconciliation\nLedger Health\nAccounting Period Lock",
+   "reqd": 1
+  },
+  {
+   "description": "Comma-separated task titles within this template that must be Completed or Skipped first.",
+   "fieldname": "depends_on_titles",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Depends On (Titles)"
+  },
+  {
+   "fieldname": "column_break_task",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "owner_role",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Owner Role",
+   "options": "Role"
+  },
+  {
+   "default": "0",
+   "description": "Due date = period end date + this many calendar days.",
+   "fieldname": "due_day_offset",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Due Day Offset"
+  },
+  {
+   "default": "0",
+   "description": "Verify this task automatically against the underlying accounting records.",
+   "fieldname": "auto_verify",
+   "fieldtype": "Check",
+   "label": "Auto Verify"
+  },
+  {
+   "fieldname": "section_break_instructions",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "instructions",
+   "fieldtype": "Small Text",
+   "label": "Instructions"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-08-13 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Accounts",
+ "name": "Close Task Template Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}

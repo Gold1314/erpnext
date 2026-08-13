@@ -1,0 +1,49 @@
+{
+ "actions": [],
+ "creation": "2026-08-13 10:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "close_task",
+  "dep_task_title",
+  "dep_status"
+ ],
+ "fields": [
+  {
+   "fieldname": "close_task",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Close Task",
+   "options": "Close Task",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "close_task.task_title",
+   "fieldname": "dep_task_title",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Task Title",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "close_task.status",
+   "fieldname": "dep_status",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Status",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-08-13 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Accounts",
+ "name": "Close Task Dependency",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}
