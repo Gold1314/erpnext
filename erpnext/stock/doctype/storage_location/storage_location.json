@@ -1,0 +1,219 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "autoname": "field:location_code",
+ "creation": "2026-08-13 10:00:00.000000",
+ "default_view": "Tree",
+ "description": "A physical storage location (zone/aisle/rack/bin) inside a Warehouse. Becomes a stock-ledger dimension via the Storage Location Inventory Dimension.",
+ "doctype": "DocType",
+ "document_type": "Setup",
+ "engine": "InnoDB",
+ "field_order": [
+  "location_details_section",
+  "location_code",
+  "location_name",
+  "disabled",
+  "column_break_glvq",
+  "warehouse",
+  "location_type",
+  "capacity_section",
+  "pick_sequence",
+  "column_break_wcap",
+  "capacity_qty",
+  "capacity_uom",
+  "tree_section",
+  "parent_storage_location",
+  "is_group",
+  "tree_details",
+  "lft",
+  "rgt",
+  "old_parent"
+ ],
+ "fields": [
+  {
+   "fieldname": "location_details_section",
+   "fieldtype": "Section Break",
+   "label": "Location Details"
+  },
+  {
+   "fieldname": "location_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Location Code",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "location_name",
+   "fieldtype": "Data",
+   "label": "Location Name"
+  },
+  {
+   "default": "0",
+   "fieldname": "disabled",
+   "fieldtype": "Check",
+   "label": "Disabled"
+  },
+  {
+   "fieldname": "column_break_glvq",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Mandatory for leaf locations. Child locations must belong to the same warehouse as their parent.",
+   "fieldname": "warehouse",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Warehouse",
+   "mandatory_depends_on": "eval:!doc.is_group",
+   "options": "Warehouse",
+   "search_index": 1
+  },
+  {
+   "default": "Bin",
+   "fieldname": "location_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Location Type",
+   "options": "Zone\nAisle\nRack\nBin\nStaging\nQC\nBulk\nPick Face"
+  },
+  {
+   "depends_on": "eval:!doc.is_group",
+   "fieldname": "capacity_section",
+   "fieldtype": "Section Break",
+   "label": "Capacity and Pick Path"
+  },
+  {
+   "default": "0",
+   "description": "Pick-path ordering: lower sequence is visited first. Must not be negative.",
+   "fieldname": "pick_sequence",
+   "fieldtype": "Int",
+   "label": "Pick Sequence",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "column_break_wcap",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "description": "Total quantity the location can hold (stock UOM, across items). 0 means unlimited.",
+   "fieldname": "capacity_qty",
+   "fieldtype": "Float",
+   "label": "Capacity Qty",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "capacity_uom",
+   "fieldtype": "Link",
+   "label": "Capacity UOM",
+   "options": "UOM"
+  },
+  {
+   "fieldname": "tree_section",
+   "fieldtype": "Section Break",
+   "label": "Hierarchy"
+  },
+  {
+   "bold": 1,
+   "fieldname": "parent_storage_location",
+   "fieldtype": "Link",
+   "ignore_user_permissions": 1,
+   "label": "Parent Storage Location",
+   "options": "Storage Location",
+   "search_index": 1
+  },
+  {
+   "bold": 1,
+   "default": "0",
+   "fieldname": "is_group",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Is Group"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "tree_details",
+   "fieldtype": "Section Break",
+   "label": "Tree Details"
+  },
+  {
+   "fieldname": "lft",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "lft",
+   "read_only": 1
+  },
+  {
+   "fieldname": "rgt",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "rgt",
+   "read_only": 1
+  },
+  {
+   "fieldname": "old_parent",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "ignore_user_permissions": 1,
+   "label": "Old Parent",
+   "options": "Storage Location",
+   "read_only": 1
+  }
+ ],
+ "grid_page_length": 50,
+ "icon": "fa fa-map-marker",
+ "is_tree": 1,
+ "links": [],
+ "modified": "2026-08-13 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Stock",
+ "name": "Storage Location",
+ "naming_rule": "By fieldname",
+ "nsm_parent_field": "parent_storage_location",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "import": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "import": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Stock Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Stock User"
+  }
+ ],
+ "row_format": "Dynamic",
+ "search_fields": "location_name,warehouse,location_type",
+ "show_name_in_global_search": 1,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

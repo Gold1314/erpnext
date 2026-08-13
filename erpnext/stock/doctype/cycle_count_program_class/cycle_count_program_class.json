@@ -1,0 +1,53 @@
+{
+ "actions": [],
+ "creation": "2026-08-13 10:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "abc_class",
+  "count_frequency_days",
+  "items_per_count"
+ ],
+ "fields": [
+  {
+   "fieldname": "abc_class",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "ABC Class",
+   "options": "A\nB\nC",
+   "reqd": 1
+  },
+  {
+   "description": "Count every item of this class at least once every N days.",
+   "fieldname": "count_frequency_days",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Count Frequency (Days)",
+   "non_negative": 1,
+   "reqd": 1
+  },
+  {
+   "default": "20",
+   "description": "Maximum items per generated count sheet (draft Stock Reconciliation).",
+   "fieldname": "items_per_count",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Items per Count",
+   "non_negative": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-08-13 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Stock",
+ "name": "Cycle Count Program Class",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}

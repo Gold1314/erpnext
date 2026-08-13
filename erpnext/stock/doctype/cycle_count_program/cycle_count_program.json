@@ -1,0 +1,154 @@
+{
+ "actions": [],
+ "autoname": "field:program_name",
+ "creation": "2026-08-13 10:00:00.000000",
+ "description": "ABC-classifies items by consumption velocity and generates draft Stock Reconciliation count sheets on a per-class cadence.",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "program_details_section",
+  "program_name",
+  "enabled",
+  "column_break_pjqd",
+  "company",
+  "warehouse",
+  "classification_section",
+  "lookback_days",
+  "column_break_abcx",
+  "last_classified_on",
+  "class_settings_section",
+  "class_settings"
+ ],
+ "fields": [
+  {
+   "fieldname": "program_details_section",
+   "fieldtype": "Section Break",
+   "label": "Program Details"
+  },
+  {
+   "fieldname": "program_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Program Name",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "default": "1",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "label": "Enabled"
+  },
+  {
+   "fieldname": "column_break_pjqd",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Company",
+   "options": "Company",
+   "remember_last_selected_value": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "warehouse",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Warehouse",
+   "options": "Warehouse",
+   "reqd": 1
+  },
+  {
+   "fieldname": "classification_section",
+   "fieldtype": "Section Break",
+   "label": "ABC Classification"
+  },
+  {
+   "default": "90",
+   "description": "Consumption window (days) for velocity-based ABC classification.",
+   "fieldname": "lookback_days",
+   "fieldtype": "Int",
+   "label": "Lookback Days",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "column_break_abcx",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "last_classified_on",
+   "fieldtype": "Date",
+   "label": "Last Classified On",
+   "read_only": 1
+  },
+  {
+   "fieldname": "class_settings_section",
+   "fieldtype": "Section Break",
+   "label": "Class Settings"
+  },
+  {
+   "description": "Count cadence per ABC class. Defaults: A every 30 days, B every 90, C every 365, 20 items per count sheet.",
+   "fieldname": "class_settings",
+   "fieldtype": "Table",
+   "label": "Class Settings",
+   "options": "Cycle Count Program Class"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [
+  {
+   "link_doctype": "Cycle Count Log",
+   "link_fieldname": "program"
+  }
+ ],
+ "modified": "2026-08-13 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Stock",
+ "name": "Cycle Count Program",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Stock Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Stock User"
+  }
+ ],
+ "row_format": "Dynamic",
+ "search_fields": "company,warehouse",
+ "show_name_in_global_search": 1,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
