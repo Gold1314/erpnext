@@ -1,0 +1,369 @@
+{
+ "actions": [],
+ "autoname": "format:LEASE-{#####}",
+ "creation": "2026-08-13 10:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "company",
+  "lessor",
+  "lease_name",
+  "asset_description",
+  "column_break_dates",
+  "commencement_date",
+  "end_date",
+  "is_short_term",
+  "terms_section",
+  "annual_discount_rate",
+  "payment_timing",
+  "column_break_terms",
+  "payment_frequency",
+  "payment_amount",
+  "payments_section",
+  "payments",
+  "asset_section",
+  "asset_category",
+  "asset_item",
+  "column_break_asset",
+  "location",
+  "cost_center",
+  "rou_asset",
+  "accounts_section",
+  "lease_liability_account",
+  "interest_expense_account",
+  "column_break_accounts",
+  "payment_account",
+  "short_term_expense_account",
+  "computed_section",
+  "initial_liability",
+  "column_break_computed",
+  "initial_rou",
+  "column_break_computed_2",
+  "total_interest",
+  "schedule_section",
+  "amortization_schedule",
+  "commencement_journal_entry",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
+   "fieldname": "lessor",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Lessor",
+   "options": "Supplier"
+  },
+  {
+   "fieldname": "lease_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Lease Name"
+  },
+  {
+   "fieldname": "asset_description",
+   "fieldtype": "Small Text",
+   "label": "Leased Asset Description"
+  },
+  {
+   "fieldname": "column_break_dates",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "commencement_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Commencement Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "end_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "End Date",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "description": "Set automatically: leases of 12 months or less are expensed as incurred (short-term exemption), with no ROU asset or lease liability.",
+   "fieldname": "is_short_term",
+   "fieldtype": "Check",
+   "label": "Is Short Term Lease",
+   "read_only": 1
+  },
+  {
+   "fieldname": "terms_section",
+   "fieldtype": "Section Break",
+   "label": "Discounting and Payment Terms"
+  },
+  {
+   "fieldname": "annual_discount_rate",
+   "fieldtype": "Percent",
+   "label": "Annual Discount Rate",
+   "reqd": 1
+  },
+  {
+   "default": "End of Period",
+   "fieldname": "payment_timing",
+   "fieldtype": "Select",
+   "label": "Payment Timing",
+   "options": "End of Period\nBeginning of Period",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_terms",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Monthly",
+   "description": "Used only by the Generate Payments action to pre-fill the payment rows below.",
+   "fieldname": "payment_frequency",
+   "fieldtype": "Select",
+   "label": "Payment Frequency",
+   "options": "Monthly\nQuarterly\nAnnually"
+  },
+  {
+   "description": "Used only by the Generate Payments action to pre-fill the payment rows below.",
+   "fieldname": "payment_amount",
+   "fieldtype": "Currency",
+   "label": "Payment Amount",
+   "options": "Company:company:default_currency"
+  },
+  {
+   "description": "The payment rows are the source of truth for all computations; the frequency and amount above only pre-fill them.",
+   "fieldname": "payments_section",
+   "fieldtype": "Section Break",
+   "label": "Lease Payments"
+  },
+  {
+   "fieldname": "payments",
+   "fieldtype": "Table",
+   "label": "Payments",
+   "options": "Lease Contract Payment",
+   "reqd": 1
+  },
+  {
+   "depends_on": "eval:!doc.is_short_term",
+   "fieldname": "asset_section",
+   "fieldtype": "Section Break",
+   "label": "Right-of-Use Asset"
+  },
+  {
+   "fieldname": "asset_category",
+   "fieldtype": "Link",
+   "label": "Asset Category",
+   "mandatory_depends_on": "eval:!doc.is_short_term",
+   "options": "Asset Category"
+  },
+  {
+   "description": "Fixed-asset, non-stock Item used to create the Right-of-Use Asset.",
+   "fieldname": "asset_item",
+   "fieldtype": "Link",
+   "label": "Asset Item",
+   "mandatory_depends_on": "eval:!doc.is_short_term",
+   "options": "Item"
+  },
+  {
+   "fieldname": "column_break_asset",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "location",
+   "fieldtype": "Link",
+   "label": "Location",
+   "mandatory_depends_on": "eval:!doc.is_short_term",
+   "options": "Location"
+  },
+  {
+   "fieldname": "cost_center",
+   "fieldtype": "Link",
+   "label": "Cost Center",
+   "options": "Cost Center"
+  },
+  {
+   "fieldname": "rou_asset",
+   "fieldtype": "Link",
+   "label": "Right-of-Use Asset",
+   "options": "Asset",
+   "read_only": 1
+  },
+  {
+   "fieldname": "accounts_section",
+   "fieldtype": "Section Break",
+   "label": "Accounts"
+  },
+  {
+   "fieldname": "lease_liability_account",
+   "fieldtype": "Link",
+   "label": "Lease Liability Account",
+   "mandatory_depends_on": "eval:!doc.is_short_term",
+   "options": "Account"
+  },
+  {
+   "fieldname": "interest_expense_account",
+   "fieldtype": "Link",
+   "label": "Interest Expense Account",
+   "mandatory_depends_on": "eval:!doc.is_short_term",
+   "options": "Account"
+  },
+  {
+   "fieldname": "column_break_accounts",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Bank or payable account credited when monthly entries are posted.",
+   "fieldname": "payment_account",
+   "fieldtype": "Link",
+   "label": "Payment Account",
+   "options": "Account",
+   "reqd": 1
+  },
+  {
+   "depends_on": "eval:doc.is_short_term",
+   "fieldname": "short_term_expense_account",
+   "fieldtype": "Link",
+   "label": "Short Term Lease Expense Account",
+   "mandatory_depends_on": "eval:doc.is_short_term",
+   "options": "Account"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "computed_section",
+   "fieldtype": "Section Break",
+   "label": "Computed Values"
+  },
+  {
+   "fieldname": "initial_liability",
+   "fieldtype": "Currency",
+   "label": "Initial Lease Liability",
+   "options": "Company:company:default_currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_computed",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "initial_rou",
+   "fieldtype": "Currency",
+   "label": "Initial ROU Asset Value",
+   "options": "Company:company:default_currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_computed_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "total_interest",
+   "fieldtype": "Currency",
+   "label": "Total Interest Over Term",
+   "options": "Company:company:default_currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "schedule_section",
+   "fieldtype": "Section Break",
+   "label": "Amortization Schedule"
+  },
+  {
+   "fieldname": "amortization_schedule",
+   "fieldtype": "Table",
+   "label": "Amortization Schedule",
+   "options": "Lease Amortization Entry",
+   "read_only": 1
+  },
+  {
+   "fieldname": "commencement_journal_entry",
+   "fieldtype": "Link",
+   "label": "Commencement Journal Entry",
+   "options": "Journal Entry",
+   "read_only": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Lease Contract",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-08-13 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Assets",
+ "name": "Lease Contract",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts User",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Auditor",
+   "share": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "lease_name",
+ "track_changes": 1
+}
