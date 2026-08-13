@@ -27,7 +27,7 @@ class CloseCycle(Document):
 		company: DF.Link
 		notes: DF.SmallText | None
 		period_end_date: DF.Date
-		period_start_date: DF.Date | None
+		period_start_date: DF.Date
 		progress: DF.Percent
 		status: DF.Literal["Open", "In Progress", "Completed"]
 	# end: auto-generated types

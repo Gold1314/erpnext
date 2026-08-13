@@ -41,7 +41,8 @@
   {
    "fieldname": "period_start_date",
    "fieldtype": "Date",
-   "label": "Period Start Date"
+   "label": "Period Start Date",
+   "reqd": 1
   },
   {
    "fieldname": "period_end_date",

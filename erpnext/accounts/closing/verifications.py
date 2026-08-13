@@ -55,13 +55,16 @@ def verify_period_closing_voucher(company, period_start, period_end):
 
 def verify_exchange_rate_revaluation(company, period_start, period_end):
 	"""A submitted Exchange Rate Revaluation exists with posting_date inside the period."""
+	if not period_start:
+		return False, _(
+			"Close Cycle has no period start date, so a revaluation cannot be confirmed as posted within the period."
+		)
+
 	filters = {
 		"docstatus": SUBMITTED,
 		"company": company,
-		"posting_date": ("<=", period_end),
+		"posting_date": ("between", (period_start, period_end)),
 	}
-	if period_start:
-		filters["posting_date"] = ("between", (period_start, period_end))
 	err = frappe.db.get_value("Exchange Rate Revaluation", filters, "name")
 	if err:
 		return True, _("Exchange Rate Revaluation {0} was posted within the period.").format(err)
@@ -91,6 +94,11 @@ def verify_deferred_accounting(company, period_start, period_end):
 def verify_bank_reconciliation(company, period_start, period_end):
 	"""Every enabled company Bank Account has zero unreconciled Bank Transactions
 	in the period (submitted, not Reconciled/Cancelled, with unallocated amount)."""
+	if not period_start:
+		return False, _(
+			"Close Cycle has no period start date, so bank reconciliation cannot be scoped to the period."
+		)
+
 	bank_accounts = frappe.get_all(
 		"Bank Account",
 		filters={"company": company, "is_company_account": 1, "disabled": 0},
@@ -106,10 +114,8 @@ def verify_bank_reconciliation(company, period_start, period_end):
 			"bank_account": account.name,
 			"status": ("not in", ("Reconciled", "Cancelled")),
 			"unallocated_amount": (">", 0),
-			"date": ("<=", period_end),
+			"date": ("between", (period_start, period_end)),
 		}
-		if period_start:
-			filters["date"] = ("between", (period_start, period_end))
 		count = frappe.db.count("Bank Transaction", filters)
 		if count:
 			pending.append(f"{account.account_name or account.name}: {count}")

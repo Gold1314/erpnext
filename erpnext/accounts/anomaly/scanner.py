@@ -28,6 +28,10 @@ from erpnext.accounts.anomaly.models import (
 	Finding,
 )
 
+#: Baseline posting-date lookback for the duplicate-invoice check. The effective
+#: lookback is widened to the configured pairing window when that is larger.
+DUPLICATE_LOOKBACK_DAYS = 90
+
 
 def run_scheduled_scan():
 	"""Daily scheduler entry point (recommended hooks.py wiring:
@@ -100,9 +104,13 @@ def collect_findings(company: str, settings) -> list[Finding]:
 	findings: list[Finding] = []
 
 	if settings.enable_duplicate_invoices:
+		duplicate_days_window = cint(settings.duplicate_days_window) or 45
+		# The posting lookback must cover the pairing window, otherwise a duplicate
+		# re-entered today can never be paired with an original that has already
+		# aged out of the lookback.
 		findings += engine.find_duplicate_invoices(
-			loaders.get_invoices(company),
-			days_window=cint(settings.duplicate_days_window) or 45,
+			loaders.get_invoices(company, days=max(DUPLICATE_LOOKBACK_DAYS, duplicate_days_window)),
+			days_window=duplicate_days_window,
 		)
 
 	if settings.enable_account_outliers:
