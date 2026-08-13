@@ -495,6 +495,7 @@ scheduler_events = {
 	"daily": [],
 	"daily_long": [],
 	"daily_maintenance": [
+		"erpnext.accounts.doctype.sod_rule.sod_rule.run_sod_scan",
 		"erpnext.support.doctype.issue.issue.auto_close_tickets",
 		"erpnext.crm.doctype.opportunity.opportunity.auto_close_opportunity",
 		"erpnext.controllers.accounts_controller.update_invoice_status",
