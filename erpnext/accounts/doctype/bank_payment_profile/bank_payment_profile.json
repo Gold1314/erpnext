@@ -1,0 +1,164 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:profile_name",
+ "creation": "2026-08-13 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "profile_name",
+  "company",
+  "company_bank_account",
+  "column_break_main",
+  "is_default",
+  "initiating_party_name",
+  "section_break_format",
+  "pain_variant",
+  "service_level",
+  "column_break_format",
+  "charge_bearer",
+  "batch_booking",
+  "section_break_notes",
+  "notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "profile_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Profile Name",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
+   "description": "Restrict this profile to one company bank account. Leave empty to use it for every account of the company.",
+   "fieldname": "company_bank_account",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Company Bank Account",
+   "options": "Bank Account"
+  },
+  {
+   "fieldname": "column_break_main",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "description": "Used when no profile is passed explicitly. Only one default per company.",
+   "fieldname": "is_default",
+   "fieldtype": "Check",
+   "label": "Is Default"
+  },
+  {
+   "description": "Name written to GrpHdr/InitgPty/Nm. Defaults to the company name.",
+   "fieldname": "initiating_party_name",
+   "fieldtype": "Data",
+   "label": "Initiating Party Name"
+  },
+  {
+   "fieldname": "section_break_format",
+   "fieldtype": "Section Break",
+   "label": "File Format"
+  },
+  {
+   "default": "pain.001.001.09",
+   "description": "Message version your bank accepts. pain.001.001.03 is the legacy SEPA version; pain.001.001.09 is the current one.",
+   "fieldname": "pain_variant",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "pain.001 Variant",
+   "options": "pain.001.001.03\npain.001.001.09",
+   "reqd": 1
+  },
+  {
+   "default": "SEPA",
+   "description": "PmtTpInf/SvcLvl/Cd. SEPA is euro-only and is omitted automatically for non-EUR files. Choose None to leave the service level out entirely.",
+   "fieldname": "service_level",
+   "fieldtype": "Select",
+   "label": "Service Level",
+   "options": "SEPA\nNURG\nNone"
+  },
+  {
+   "fieldname": "column_break_format",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "SLEV",
+   "description": "ChrgBr. SLEV (following service level) is mandatory for SEPA credit transfers.",
+   "fieldname": "charge_bearer",
+   "fieldtype": "Select",
+   "label": "Charge Bearer",
+   "options": "SLEV\nSHAR\nDEBT\nCRED"
+  },
+  {
+   "default": "0",
+   "description": "BtchBookg. When ticked the bank books one collective debit instead of one per transaction.",
+   "fieldname": "batch_booking",
+   "fieldtype": "Check",
+   "label": "Batch Booking"
+  },
+  {
+   "fieldname": "section_break_notes",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "Notes"
+  }
+ ],
+ "links": [],
+ "modified": "2026-08-13 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Accounts",
+ "name": "Bank Payment Profile",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts User"
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
