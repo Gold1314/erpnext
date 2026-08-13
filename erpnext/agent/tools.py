@@ -678,7 +678,17 @@ def _resolve_amount(entry: dict, params: dict):
 		return _payload_amount(params.get("data"))
 	if name == "update_draft":
 		doctype, docname = params.get("doctype"), params.get("name")
-		return _payload_amount(params.get("data")) or _stored_amount(doctype, docname)
+		# Test the cap against the larger of the stored and proposed amounts.
+		# Taking the payload first would let an agent declare a small
+		# ``grand_total`` to slip under a cap, since ``save`` recalculates the
+		# real total from the lines afterwards; taking the stored value alone
+		# would miss an update that raises the amount above the cap.
+		candidates = [
+			amount
+			for amount in (_stored_amount(doctype, docname), _payload_amount(params.get("data")))
+			if amount is not None
+		]
+		return max(candidates) if candidates else None
 	if name == "submit_document":
 		return _stored_amount(params.get("doctype"), params.get("name"))
 	return None

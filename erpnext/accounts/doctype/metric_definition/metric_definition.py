@@ -68,7 +68,10 @@ class MetricDefinition(Document):
 
 	def validate_threshold_order(self, spec):
 		"""Green must be at least as demanding as Amber, per direction."""
-		if not (self.green_min and self.amber_min):
+		# Compare against None, not truthiness: zero is a real boundary for
+		# Count metrics (green_min = 0 open violations), and treating it as
+		# "unset" would let an inverted Green/Amber pair through unchecked.
+		if self.green_min is None or self.amber_min is None:
 			return
 
 		if spec.direction == HIGHER_IS_BETTER and self.green_min < self.amber_min:

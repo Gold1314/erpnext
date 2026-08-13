@@ -409,20 +409,28 @@ def get_ops_inputs(company: str, period_start, period_end) -> tuple[dict, list[s
 			soi.delivery_date,
 			soi.qty,
 			soi.delivered_qty,
-			Max(dn.posting_date).as_("last_delivery_date"),
 		)
+		.distinct()
 		.where(dn.docstatus == 1)
 		.where(dn.company == company)
 		.where(dn.is_return == 0)
 		.where(dn.posting_date >= from_date)
 		.where(dn.posting_date <= to_date)
-		.groupby(soi.name, soi.delivery_date, soi.qty, soi.delivered_qty)
 		.run(as_dict=True)
 	)
 
+	# The period scopes *which* lines are measured, but on-time is a property of
+	# the line's own completion: a line delivered on time in-period and finished
+	# late after the window is not on-time. So the last delivery date is taken
+	# across every delivery of these lines, not just the in-period ones.
+	last_delivery = _last_delivery_dates([row.so_item for row in delivered])
+
 	otif_lines = 0
 	for row in delivered:
-		on_time = not row.delivery_date or getdate(row.last_delivery_date) <= getdate(row.delivery_date)
+		row.last_delivery_date = last_delivery.get(row.so_item)
+		on_time = not row.delivery_date or (
+			row.last_delivery_date and getdate(row.last_delivery_date) <= getdate(row.delivery_date)
+		)
 		in_full = flt(row.delivered_qty) >= flt(row.qty) - 0.01
 		if on_time and in_full:
 			otif_lines += 1
@@ -467,6 +475,39 @@ def get_ops_inputs(company: str, period_start, period_end) -> tuple[dict, list[s
 # ---------------------------------------------------------------------------
 # Governance / close
 # ---------------------------------------------------------------------------
+def _last_delivery_dates(so_items: list[str]) -> dict:
+	"""Last submitted delivery date per Sales Order Item, over all deliveries.
+
+	Deliberately unfiltered by period: on-time is judged against the line's
+	final delivery, wherever it falls. Queried in chunks so a long period
+	cannot build an unbounded IN clause.
+	"""
+	if not so_items:
+		return {}
+
+	dn = frappe.qb.DocType("Delivery Note")
+	dni = frappe.qb.DocType("Delivery Note Item")
+	last: dict = {}
+
+	for start in range(0, len(so_items), 1000):
+		chunk = so_items[start : start + 1000]
+		rows = (
+			frappe.qb.from_(dni)
+			.inner_join(dn)
+			.on(dn.name == dni.parent)
+			.select(dni.so_detail, Max(dn.posting_date).as_("last_delivery_date"))
+			.where(dn.docstatus == 1)
+			.where(dn.is_return == 0)
+			.where(dni.so_detail.isin(chunk))
+			.groupby(dni.so_detail)
+			.run(as_dict=True)
+		)
+		for row in rows:
+			last[row.so_detail] = row.last_delivery_date
+
+	return last
+
+
 def get_governance_inputs(company: str, period_start, period_end) -> tuple[dict, list[str]]:
 	"""Close duration, open anomalies, open SoD violations, forecast MAPE.
 
