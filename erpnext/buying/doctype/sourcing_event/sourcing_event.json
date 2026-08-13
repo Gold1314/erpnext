@@ -1,0 +1,254 @@
+{
+ "actions": [],
+ "autoname": "format:SRCEVT-{#####}",
+ "creation": "2026-08-13 10:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "title",
+  "company",
+  "event_type",
+  "column_break_header",
+  "status",
+  "open_date",
+  "close_date",
+  "sealed_until_close",
+  "amended_from",
+  "weights_section",
+  "weight_price",
+  "weight_lead_time",
+  "column_break_weights",
+  "weight_scorecard",
+  "weight_qualification",
+  "require_qualification",
+  "suppliers_section",
+  "suppliers",
+  "items_section",
+  "items",
+  "notes_section",
+  "notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "label": "Title",
+   "reqd": 1
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
+   "default": "RFQ",
+   "description": "RFQ and RFP are scored by the weighted award engine. Reverse Auction is reserved for a follow-up release.",
+   "fieldname": "event_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Event Type",
+   "options": "RFQ\nRFP\nReverse Auction",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_header",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Draft",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "no_copy": 1,
+   "options": "Draft\nOpen\nClosed\nAwarded\nCancelled",
+   "read_only": 1
+  },
+  {
+   "default": "Today",
+   "fieldname": "open_date",
+   "fieldtype": "Date",
+   "label": "Open Date"
+  },
+  {
+   "description": "Bids submitted after this date are rejected.",
+   "fieldname": "close_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Close Date",
+   "reqd": 1
+  },
+  {
+   "default": "1",
+   "description": "Hide bid values from comparison until the event is closed.",
+   "fieldname": "sealed_until_close",
+   "fieldtype": "Check",
+   "label": "Sealed Until Close"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Sourcing Event",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "description": "Relative weights of the four award components. They need not add up to 100 - the engine normalizes by their sum.",
+   "fieldname": "weights_section",
+   "fieldtype": "Section Break",
+   "label": "Award Weights"
+  },
+  {
+   "default": "50",
+   "fieldname": "weight_price",
+   "fieldtype": "Float",
+   "label": "Price Weight"
+  },
+  {
+   "default": "20",
+   "fieldname": "weight_lead_time",
+   "fieldtype": "Float",
+   "label": "Lead Time Weight"
+  },
+  {
+   "fieldname": "column_break_weights",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "20",
+   "description": "Uses the Supplier Scorecard standing (supplier_score, 0-100).",
+   "fieldname": "weight_scorecard",
+   "fieldtype": "Float",
+   "label": "Scorecard Weight"
+  },
+  {
+   "default": "10",
+   "description": "Uses the latest submitted, unexpired Supplier Qualification score.",
+   "fieldname": "weight_qualification",
+   "fieldtype": "Float",
+   "label": "Qualification Weight"
+  },
+  {
+   "default": "0",
+   "description": "Exclude suppliers without a valid Supplier Qualification from the award analysis.",
+   "fieldname": "require_qualification",
+   "fieldtype": "Check",
+   "label": "Require Qualification"
+  },
+  {
+   "fieldname": "suppliers_section",
+   "fieldtype": "Section Break",
+   "label": "Invited Suppliers"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "suppliers",
+   "fieldtype": "Table",
+   "label": "Suppliers",
+   "options": "Sourcing Event Supplier",
+   "reqd": 1
+  },
+  {
+   "fieldname": "items_section",
+   "fieldtype": "Section Break",
+   "label": "Items"
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "label": "Items",
+   "options": "Sourcing Event Item",
+   "reqd": 1
+  },
+  {
+   "fieldname": "notes_section",
+   "fieldtype": "Section Break",
+   "label": "Notes"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "Notes"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [
+  {
+   "link_doctype": "Sourcing Event Bid",
+   "link_fieldname": "sourcing_event"
+  }
+ ],
+ "modified": "2026-08-13 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Buying",
+ "name": "Sourcing Event",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Purchase Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Purchase User",
+   "share": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts Manager",
+   "share": 1
+  }
+ ],
+ "search_fields": "title,status,close_date",
+ "show_title_field_in_link": 1,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "title",
+ "track_changes": 1
+}

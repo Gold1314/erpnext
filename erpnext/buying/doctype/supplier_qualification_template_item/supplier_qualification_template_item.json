@@ -1,0 +1,90 @@
+{
+ "actions": [],
+ "creation": "2026-08-13 10:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "question",
+  "category",
+  "column_break_scoring",
+  "weight",
+  "max_score",
+  "is_knockout",
+  "section_break_guidance",
+  "guidance"
+ ],
+ "fields": [
+  {
+   "columns": 4,
+   "fieldname": "question",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Question",
+   "reqd": 1
+  },
+  {
+   "columns": 2,
+   "default": "Financial",
+   "fieldname": "category",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Category",
+   "options": "Financial\nQuality\nCompliance\nCapability\nSustainability",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_scoring",
+   "fieldtype": "Column Break"
+  },
+  {
+   "columns": 1,
+   "default": "1",
+   "description": "Relative importance of this question in the weighted score.",
+   "fieldname": "weight",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Weight"
+  },
+  {
+   "columns": 1,
+   "default": "5",
+   "fieldname": "max_score",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Max Score"
+  },
+  {
+   "columns": 1,
+   "default": "0",
+   "description": "Failing this question rejects the supplier regardless of the total score.",
+   "fieldname": "is_knockout",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Knockout"
+  },
+  {
+   "fieldname": "section_break_guidance",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "guidance",
+   "fieldtype": "Small Text",
+   "label": "Guidance"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-08-13 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Buying",
+ "name": "Supplier Qualification Template Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

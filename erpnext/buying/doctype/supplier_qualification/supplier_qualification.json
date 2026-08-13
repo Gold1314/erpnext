@@ -1,0 +1,259 @@
+{
+ "actions": [],
+ "autoname": "format:SQUAL-{#####}",
+ "creation": "2026-08-13 10:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "supplier",
+  "supplier_name",
+  "template",
+  "company",
+  "column_break_header",
+  "qualification_date",
+  "valid_until",
+  "status",
+  "amended_from",
+  "result_section",
+  "score_percent",
+  "risk_tier",
+  "column_break_result",
+  "total_score",
+  "max_score",
+  "section_break_knockout",
+  "knockout_failures",
+  "answers_section",
+  "answers",
+  "documents_section",
+  "documents",
+  "notes_section",
+  "notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "supplier",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Supplier",
+   "link_filters": "[[\"Supplier\",\"disabled\",\"=\",0]]",
+   "options": "Supplier",
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "fetch_from": "supplier.supplier_name",
+   "fieldname": "supplier_name",
+   "fieldtype": "Data",
+   "in_global_search": 1,
+   "label": "Supplier Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "template",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Qualification Template",
+   "options": "Supplier Qualification Template",
+   "reqd": 1
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Company",
+   "options": "Company"
+  },
+  {
+   "fieldname": "column_break_header",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Today",
+   "fieldname": "qualification_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Qualification Date"
+  },
+  {
+   "description": "After this date the qualification is treated as expired by sourcing scoring and the qualification status report.",
+   "fieldname": "valid_until",
+   "fieldtype": "Date",
+   "label": "Valid Until"
+  },
+  {
+   "default": "Draft",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "no_copy": 1,
+   "options": "Draft\nQualified\nRejected\nExpired",
+   "read_only": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Supplier Qualification",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "result_section",
+   "fieldtype": "Section Break",
+   "label": "Result"
+  },
+  {
+   "fieldname": "score_percent",
+   "fieldtype": "Percent",
+   "in_list_view": 1,
+   "label": "Score %",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "risk_tier",
+   "fieldtype": "Data",
+   "in_standard_filter": 1,
+   "label": "Risk Tier",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_result",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "total_score",
+   "fieldtype": "Float",
+   "label": "Weighted Score",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "max_score",
+   "fieldtype": "Float",
+   "label": "Weighted Max Score",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_knockout",
+   "fieldtype": "Section Break"
+  },
+  {
+   "depends_on": "knockout_failures",
+   "fieldname": "knockout_failures",
+   "fieldtype": "Small Text",
+   "label": "Knockout Failures",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "description": "Load the questions from the template, then score each answer.",
+   "fieldname": "answers_section",
+   "fieldtype": "Section Break",
+   "label": "Questionnaire"
+  },
+  {
+   "fieldname": "answers",
+   "fieldtype": "Table",
+   "label": "Answers",
+   "options": "Supplier Qualification Answer"
+  },
+  {
+   "fieldname": "documents_section",
+   "fieldtype": "Section Break",
+   "label": "Documents"
+  },
+  {
+   "fieldname": "documents",
+   "fieldtype": "Table",
+   "label": "Documents",
+   "options": "Supplier Document Requirement"
+  },
+  {
+   "fieldname": "notes_section",
+   "fieldtype": "Section Break",
+   "label": "Notes"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "Notes"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-08-13 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Buying",
+ "name": "Supplier Qualification",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Purchase Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Purchase User",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts Manager",
+   "share": 1
+  }
+ ],
+ "search_fields": "supplier,status,risk_tier",
+ "show_title_field_in_link": 1,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "supplier",
+ "track_changes": 1
+}
