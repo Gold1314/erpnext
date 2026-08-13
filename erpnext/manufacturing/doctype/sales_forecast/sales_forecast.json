@@ -13,11 +13,19 @@
   "from_date",
   "frequency",
   "demand_number",
+  "generation_method",
   "section_break_rrrx",
   "column_break_klws",
   "selected_items",
   "column_break_mtqw",
   "parent_warehouse",
+  "statistical_settings_section",
+  "based_on",
+  "forecast_model",
+  "season_length",
+  "column_break_stat",
+  "history_from_date",
+  "history_to_date",
   "section_break_cmgo",
   "generate_demand",
   "items",
@@ -152,6 +160,62 @@
    "label": "Frequency",
    "options": "Weekly\nMonthly",
    "reqd": 1
+  },
+  {
+   "default": "Manual",
+   "fieldname": "generation_method",
+   "fieldtype": "Select",
+   "label": "Generation Method",
+   "options": "Manual\nStatistical"
+  },
+  {
+   "collapsible": 1,
+   "depends_on": "eval:doc.generation_method === 'Statistical'",
+   "fieldname": "statistical_settings_section",
+   "fieldtype": "Section Break",
+   "label": "Statistical Forecasting"
+  },
+  {
+   "default": "Sales Order",
+   "depends_on": "eval:doc.generation_method === 'Statistical'",
+   "fieldname": "based_on",
+   "fieldtype": "Select",
+   "label": "Based On",
+   "options": "Sales Order\nSales Invoice\nDelivery Note"
+  },
+  {
+   "default": "Auto",
+   "depends_on": "eval:doc.generation_method === 'Statistical'",
+   "description": "Auto backtests all applicable models per item and picks the one with the lowest MAPE.",
+   "fieldname": "forecast_model",
+   "fieldtype": "Select",
+   "label": "Forecast Model",
+   "options": "Auto\nHolt-Winters Additive\nHolt-Winters Multiplicative\nHolt Linear\nExponential Smoothing\nSeasonal Naive\nCroston\nCroston SBA"
+  },
+  {
+   "depends_on": "eval:doc.generation_method === 'Statistical'",
+   "description": "Number of periods in one seasonal cycle. Defaults to 12 for Monthly and 52 for Weekly frequency.",
+   "fieldname": "season_length",
+   "fieldtype": "Int",
+   "label": "Season Length"
+  },
+  {
+   "fieldname": "column_break_stat",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.generation_method === 'Statistical'",
+   "description": "Defaults to 24 months before From Date.",
+   "fieldname": "history_from_date",
+   "fieldtype": "Date",
+   "label": "History From Date"
+  },
+  {
+   "depends_on": "eval:doc.generation_method === 'Statistical'",
+   "description": "Defaults to From Date.",
+   "fieldname": "history_to_date",
+   "fieldtype": "Date",
+   "label": "History To Date"
   }
  ],
  "grid_page_length": 50,
