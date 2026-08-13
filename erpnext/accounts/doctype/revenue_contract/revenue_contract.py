@@ -389,9 +389,14 @@ def process_revenue_recognition():
 	for name in contracts:
 		try:
 			frappe.get_doc("Revenue Contract", name).post_recognition()
-			frappe.db.commit()
+			# Commit per contract so one failure cannot undo earlier postings,
+			# but never inside tests: the test case owns the transaction and a
+			# commit or rollback here would break its isolation.
+			if not frappe.in_test:
+				frappe.db.commit()
 		except Exception:
-			frappe.db.rollback()
+			if not frappe.in_test:
+				frappe.db.rollback()
 			frappe.log_error(
 				title=f"Scheduled revenue recognition failed for {name}",
 				message=frappe.get_traceback(with_context=True),
