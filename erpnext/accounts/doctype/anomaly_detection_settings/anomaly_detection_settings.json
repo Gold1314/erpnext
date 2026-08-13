@@ -1,0 +1,148 @@
+{
+ "actions": [],
+ "creation": "2026-08-13 10:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "enabled",
+  "checks_section",
+  "enable_duplicate_invoices",
+  "enable_account_outliers",
+  "enable_rare_combinations",
+  "column_break_checks",
+  "enable_suspicious_postings",
+  "enable_benford",
+  "thresholds_section",
+  "duplicate_days_window",
+  "z_threshold",
+  "rarity_pct",
+  "column_break_thresholds",
+  "round_amount_threshold",
+  "backdate_days_threshold",
+  "benford_min_n"
+ ],
+ "fields": [
+  {
+   "default": "0",
+   "description": "When enabled, the daily scan screens every company. Per-company scoping is intentionally not supported in v1 - disable individual checks instead.",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "label": "Enable Anomaly Detection"
+  },
+  {
+   "fieldname": "checks_section",
+   "fieldtype": "Section Break",
+   "label": "Checks"
+  },
+  {
+   "default": "1",
+   "fieldname": "enable_duplicate_invoices",
+   "fieldtype": "Check",
+   "label": "Duplicate Supplier Invoices"
+  },
+  {
+   "default": "1",
+   "fieldname": "enable_account_outliers",
+   "fieldtype": "Check",
+   "label": "Off-trend Account Movements"
+  },
+  {
+   "default": "1",
+   "fieldname": "enable_rare_combinations",
+   "fieldtype": "Check",
+   "label": "Rare Account / Cost Center Combinations"
+  },
+  {
+   "fieldname": "column_break_checks",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "1",
+   "fieldname": "enable_suspicious_postings",
+   "fieldtype": "Check",
+   "label": "Suspicious Postings (Round / Weekend / Backdated)"
+  },
+  {
+   "default": "1",
+   "fieldname": "enable_benford",
+   "fieldtype": "Check",
+   "label": "Benford First-Digit Deviation"
+  },
+  {
+   "fieldname": "thresholds_section",
+   "fieldtype": "Section Break",
+   "label": "Thresholds"
+  },
+  {
+   "default": "45",
+   "description": "Invoices further apart than this many days are never paired",
+   "fieldname": "duplicate_days_window",
+   "fieldtype": "Int",
+   "label": "Duplicate Invoice Date Window (Days)"
+  },
+  {
+   "default": "3.0",
+   "description": "Minimum |z| of the latest month's net movement to flag an account",
+   "fieldname": "z_threshold",
+   "fieldtype": "Float",
+   "label": "Outlier Z-Score Threshold"
+  },
+  {
+   "default": "1.0",
+   "description": "A dimension value used in at most this % of an account's postings is rare",
+   "fieldname": "rarity_pct",
+   "fieldtype": "Float",
+   "label": "Rare Combination Threshold (%)"
+  },
+  {
+   "fieldname": "column_break_thresholds",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "10000",
+   "description": "Round multiples of 1000 at or above this amount are flagged",
+   "fieldname": "round_amount_threshold",
+   "fieldtype": "Float",
+   "label": "Round Amount Threshold"
+  },
+  {
+   "default": "14",
+   "description": "Journal Entries posted this many days before their creation date are flagged",
+   "fieldname": "backdate_days_threshold",
+   "fieldtype": "Int",
+   "label": "Backdating Threshold (Days)"
+  },
+  {
+   "default": "300",
+   "description": "Minimum number of amounts before the Benford screen runs",
+   "fieldname": "benford_min_n",
+   "fieldtype": "Int",
+   "label": "Benford Minimum Sample Size"
+  }
+ ],
+ "hide_toolbar": 1,
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2026-08-13 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Accounts",
+ "name": "Anomaly Detection Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
