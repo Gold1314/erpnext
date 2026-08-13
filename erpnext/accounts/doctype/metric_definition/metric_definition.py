@@ -6,6 +6,7 @@ from frappe import _
 from frappe.model.document import Document
 
 from erpnext.analytics import registry
+from erpnext.analytics.engine import resolve_bounds
 from erpnext.analytics.models import HIGHER_IS_BETTER, LOWER_IS_BETTER
 
 
@@ -68,24 +69,28 @@ class MetricDefinition(Document):
 
 	def validate_threshold_order(self, spec):
 		"""Green must be at least as demanding as Amber, per direction."""
-		# Compare against None, not truthiness: zero is a real boundary for
-		# Count metrics (green_min = 0 open violations), and treating it as
-		# "unset" would let an inverted Green/Amber pair through unchecked.
-		if self.green_min is None or self.amber_min is None:
+		# Resolve set-ness exactly as the grading path does, so a row is never
+		# rejected on save under different rules than the ones that grade it.
+		# Zero is a real bound for Count metrics and means "unset" elsewhere,
+		# which is why neither a plain truthiness nor a plain None test works.
+		green_min, amber_min, _red_max = resolve_bounds(
+			self.green_min, self.amber_min, self.red_max, spec.unit
+		)
+		if green_min is None or amber_min is None:
 			return
 
-		if spec.direction == HIGHER_IS_BETTER and self.green_min < self.amber_min:
+		if spec.direction == HIGHER_IS_BETTER and green_min < amber_min:
 			frappe.throw(
 				_(
 					"{0} is higher_is_better, so the Green Boundary ({1}) must be at least the Amber Boundary ({2})."
-				).format(spec.label, self.green_min, self.amber_min)
+				).format(spec.label, green_min, amber_min)
 			)
 
-		if spec.direction == LOWER_IS_BETTER and self.green_min > self.amber_min:
+		if spec.direction == LOWER_IS_BETTER and green_min > amber_min:
 			frappe.throw(
 				_(
 					"{0} is lower_is_better, so the Green Boundary ({1}) must be at most the Amber Boundary ({2})."
-				).format(spec.label, self.green_min, self.amber_min)
+				).format(spec.label, green_min, amber_min)
 			)
 
 

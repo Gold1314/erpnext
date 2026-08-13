@@ -18,6 +18,7 @@ import datetime
 
 from erpnext.analytics.models import (
 	AMBER,
+	COUNT,
 	GREEN,
 	HIGHER_IS_BETTER,
 	LOWER_IS_BETTER,
@@ -96,6 +97,35 @@ def round_for_unit(value, unit: str):
 	precision = UNIT_PRECISION.get(unit, 2)
 	rounded = round(float(value), precision)
 	return int(rounded) if precision == 0 else rounded
+
+
+def resolve_bounds(green_min, amber_min, red_max, unit: str) -> tuple:
+	"""Resolve stored threshold bounds to (green, amber, red), ``None`` = unset.
+
+	The single definition of "is this bound set?", shared by the runtime
+	grading path and Metric Definition's validation so the two can never
+	disagree about a saved row. Frappe ``Float`` columns are ``NOT NULL
+	DEFAULT 0``, so a stored ``0`` cannot be distinguished from blank:
+
+	1. a row whose three bounds are all ``0`` configures nothing;
+	2. otherwise ``0`` is a real bound only for ``Count`` metrics, where zero
+	   open findings is the natural target; for money, ratio, percent and days
+	   metrics it means unset.
+	"""
+	bounds = (green_min, amber_min, red_max)
+	if not any(bounds):
+		return (None, None, None)
+
+	zero_is_a_bound = unit == COUNT
+
+	def bound(value):
+		if value is None:
+			return None
+		if value == 0 and not zero_is_a_bound:
+			return None
+		return value
+
+	return tuple(bound(value) for value in bounds)
 
 
 def resolve_inputs(spec: MetricSpec, inputs: dict | None, calc: Calc) -> dict:

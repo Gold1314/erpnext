@@ -39,35 +39,23 @@ def _resolve_period(period_start=None, period_end=None) -> tuple:
 def _threshold_from_row(row, spec) -> Threshold | None:
 	"""Read one Metric Definition row's bounds.
 
-	Frappe ``Float`` columns are ``NOT NULL DEFAULT 0``, so a stored ``0``
-	cannot be told apart from "left blank". Two rules resolve that, and they
-	are the same two documented on the Metric Definition form:
-
-	1. a row whose three bounds are all ``0`` configures nothing - the
-	   registry's shipped default applies (this is how ``working_capital``
-	   keeps its "negative is Red" hard bound);
-	2. in any other row, ``0`` is a real bound only for ``Count`` metrics,
-	   where "zero open findings" is the natural target; for money, ratio,
-	   percent and days metrics ``0`` means unset.
+	Set-ness of each bound is decided by :func:`engine.resolve_bounds`, which
+	Metric Definition's validation also uses, so a row can never be rejected on
+	save under different rules than the ones that grade it. An all-zero row
+	configures nothing and the registry's shipped default applies (this is how
+	``working_capital`` keeps its "negative is Red" hard bound).
 	"""
-	bounds = (row.green_min, row.amber_min, row.red_max)
-	if not any(bounds):
+	green_min, amber_min, red_max = engine.resolve_bounds(
+		row.green_min, row.amber_min, row.red_max, spec.unit
+	)
+	if (green_min, amber_min, red_max) == (None, None, None):
 		return None
-
-	zero_is_a_bound = spec.unit == COUNT
-
-	def bound(value):
-		if value is None:
-			return None
-		if value == 0 and not zero_is_a_bound:
-			return None
-		return value
 
 	return Threshold(
 		key=spec.key,
-		green_min=bound(row.green_min),
-		amber_min=bound(row.amber_min),
-		red_max=bound(row.red_max),
+		green_min=green_min,
+		amber_min=amber_min,
+		red_max=red_max,
 	)
 
 
