@@ -1,0 +1,193 @@
+{
+ "actions": [],
+ "autoname": "format:CONSOL-{#####}",
+ "creation": "2026-08-13 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "parent_company",
+  "presentation_currency",
+  "column_break_head",
+  "from_date",
+  "to_date",
+  "report_date",
+  "results_section",
+  "status",
+  "column_break_results",
+  "minority_interest_total",
+  "exceptions_section",
+  "exceptions",
+  "adjustments_section",
+  "adjustment_lines",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "parent_company",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Parent Company",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
+   "fieldname": "presentation_currency",
+   "fieldtype": "Link",
+   "label": "Presentation Currency",
+   "options": "Currency",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_head",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "from_date",
+   "fieldtype": "Date",
+   "label": "From Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "to_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "To Date",
+   "reqd": 1
+  },
+  {
+   "description": "Balance-sheet cut-off; defaults to To Date.",
+   "fieldname": "report_date",
+   "fieldtype": "Date",
+   "label": "Report Date"
+  },
+  {
+   "fieldname": "results_section",
+   "fieldtype": "Section Break",
+   "label": "Results"
+  },
+  {
+   "default": "Draft",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "no_copy": 1,
+   "options": "Draft\nComputed\nFinalized\nCancelled",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_results",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "minority_interest_total",
+   "fieldtype": "Currency",
+   "label": "Minority Interest Total",
+   "no_copy": 1,
+   "options": "presentation_currency",
+   "read_only": 1
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "exceptions_section",
+   "fieldtype": "Section Break",
+   "label": "Exceptions and Warnings"
+  },
+  {
+   "description": "Out-of-balance elimination residuals and loader warnings. Residuals are reported, never silently plugged.",
+   "fieldname": "exceptions",
+   "fieldtype": "Small Text",
+   "label": "Exceptions",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "adjustments_section",
+   "fieldtype": "Section Break",
+   "label": "Adjustment Lines"
+  },
+  {
+   "fieldname": "adjustment_lines",
+   "fieldtype": "Table",
+   "label": "Adjustment Lines",
+   "no_copy": 1,
+   "options": "Consolidation Adjustment Line",
+   "read_only": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Consolidation Run",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-08-13 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Accounts",
+ "name": "Consolidation Run",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts User",
+   "share": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Auditor",
+   "share": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
