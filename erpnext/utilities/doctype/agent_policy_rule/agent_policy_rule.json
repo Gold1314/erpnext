@@ -1,0 +1,80 @@
+{
+ "actions": [],
+ "creation": "2026-08-13 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "risk_level",
+  "doctype_pattern",
+  "allow",
+  "role",
+  "max_amount",
+  "notes"
+ ],
+ "fields": [
+  {
+   "columns": 2,
+   "description": "Risk class of the tool this rule governs",
+   "fieldname": "risk_level",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Risk Level",
+   "options": "READ\nDRAFT_WRITE\nSUBMIT\nDESTRUCTIVE",
+   "reqd": 1
+  },
+  {
+   "columns": 2,
+   "description": "Exact doctype name, or * for any doctype. An exact rule always beats a * rule.",
+   "fieldname": "doctype_pattern",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Doctype Pattern",
+   "reqd": 1
+  },
+  {
+   "columns": 1,
+   "default": "0",
+   "description": "Unticked means an explicit denial, which beats an allow rule of the same specificity.",
+   "fieldname": "allow",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Allow"
+  },
+  {
+   "columns": 2,
+   "description": "Optional. The rule only applies to users holding this role.",
+   "fieldname": "role",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Role",
+   "options": "Role"
+  },
+  {
+   "columns": 2,
+   "description": "Optional cap on the transaction value. Blank (or 0) means unlimited. When a cap is set and the amount cannot be verified, the call is denied.",
+   "fieldname": "max_amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Max Amount"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "Notes"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-08-13 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Utilities",
+ "name": "Agent Policy Rule",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
