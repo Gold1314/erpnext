@@ -1,0 +1,145 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:profile_name",
+ "creation": "2026-08-13 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "profile_name",
+  "company",
+  "ubl_profile",
+  "column_break_main",
+  "is_default",
+  "transport_mode",
+  "section_break_endpoint",
+  "endpoint_scheme_seller",
+  "column_break_endpoint",
+  "seller_endpoint_id",
+  "section_break_notes",
+  "notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "profile_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Profile Name",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
+   "default": "peppol-bis-3",
+   "fieldname": "ubl_profile",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "UBL Profile",
+   "options": "peppol-bis-3\nxrechnung-3\nen16931",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_main",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "description": "Used when no profile is passed explicitly. Only one default per company.",
+   "fieldname": "is_default",
+   "fieldtype": "Check",
+   "label": "Is Default"
+  },
+  {
+   "default": "Manual",
+   "description": "Manual: download the XML and deliver it yourself. API: transmit via a configured access-point adapter.",
+   "fieldname": "transport_mode",
+   "fieldtype": "Select",
+   "label": "Transport Mode",
+   "options": "Manual\nAPI"
+  },
+  {
+   "fieldname": "section_break_endpoint",
+   "fieldtype": "Section Break",
+   "label": "Seller Electronic Address"
+  },
+  {
+   "description": "Electronic Address Scheme (EAS) code, e.g. 0088 (GLN) or 9930 (DE:VAT)",
+   "fieldname": "endpoint_scheme_seller",
+   "fieldtype": "Data",
+   "label": "Endpoint Scheme ID"
+  },
+  {
+   "fieldname": "column_break_endpoint",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Participant identifier within the scheme, e.g. the GLN or VAT number",
+   "fieldname": "seller_endpoint_id",
+   "fieldtype": "Data",
+   "label": "Seller Endpoint ID"
+  },
+  {
+   "fieldname": "section_break_notes",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "Notes"
+  }
+ ],
+ "links": [],
+ "modified": "2026-08-13 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "EDI",
+ "name": "EDI Transmission Profile",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts User"
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
