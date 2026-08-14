@@ -71,6 +71,18 @@ TEXT_FILE_EXTENSIONS = (".txt", ".csv", ".md", ".text")
 AMOUNT_TOLERANCE = 0.02
 
 
+class DocumentReadError(Exception):
+	"""The source document itself could not be read.
+
+	Distinct from an operator configuration problem (nothing attached, no
+	provider set up), which throws. This is a property of the file — encrypted,
+	corrupt, or a scan with no text layer — so it lands in status *Failed* with
+	the reason recorded, exactly like a provider failure. That matters most on
+	the enqueued path, where a raised exception would kill the job and leave
+	the document sitting in *Pending Extraction* with nothing to show for it.
+	"""
+
+
 # -------------------------------------------------------------- extraction
 
 
@@ -82,9 +94,10 @@ def _pdf_text(file_url: str) -> str:
 	and the absence is reported honestly rather than staging an empty
 	extraction, because a stripped-down install can still lack it.
 
-	A scanned PDF with no text layer yields nothing: that is an OCR problem,
-	not an extraction bug, and is reported as such instead of sending an empty
-	document to the model.
+	A missing package is an install problem and throws. Anything wrong with the
+	*file* — encrypted, corrupt, or a scan carrying no text layer — raises
+	:class:`DocumentReadError` so the caller can record it on the document
+	instead of letting it escape as an unhandled exception.
 	"""
 	try:
 		import pdfplumber
@@ -103,18 +116,27 @@ def _pdf_text(file_url: str) -> str:
 		content = content.encode("utf-8", errors="replace")
 
 	pages = []
-	with pdfplumber.open(io.BytesIO(content)) as pdf:
-		for page in pdf.pages:
-			pages.append(page.extract_text() or "")
+	try:
+		with pdfplumber.open(io.BytesIO(content)) as pdf:
+			for page in pdf.pages:
+				pages.append(page.extract_text() or "")
+	except Exception as e:
+		# encrypted, password-protected, truncated, or not really a PDF
+		frappe.log_error(title=f"PDF text extraction failed for {file_url}")
+		raise DocumentReadError(
+			_(
+				"This PDF could not be read ({0}). It may be encrypted or corrupt — "
+				"paste the invoice text into Raw Text instead."
+			).format(type(e).__name__)
+		) from e
 
 	text = "\n".join(pages).strip()
 	if not text:
-		frappe.throw(
+		raise DocumentReadError(
 			_(
 				"No text layer was found in this PDF — it is most likely a scan. "
 				"Run it through OCR first, or paste the invoice text into Raw Text."
-			),
-			title=_("No Text in PDF"),
+			)
 		)
 	return text
 
@@ -224,11 +246,13 @@ def _apply_extraction(doc, data: dict, errors: list[str], warnings: list[str]) -
 def extract_document(name: str) -> dict:
 	"""Run the LLM extraction for one staging document.
 
-	Configuration problems (no provider set up, no text to extract) throw —
-	they are the operator's to fix before anything runs. Once the provider
-	is called, *every* failure lands in status **Failed** with the message
-	on the document, never an unhandled exception: this function is
-	enqueue-friendly (see :func:`extract_document_async`).
+	Configuration problems (no provider set up, nothing attached to read) throw
+	— they are the operator's to fix before anything runs. Everything after
+	that lands in status **Failed** with the message on the document rather
+	than raising: an unreadable source file (:class:`DocumentReadError`) and
+	every provider failure alike. That keeps the function enqueue-friendly
+	(see :func:`extract_document_async`), where a raised exception would kill
+	the job and leave the document stuck in *Pending Extraction*.
 	"""
 	doc = frappe.get_doc(STAGING_DOCTYPE, name)
 	doc.check_permission("write")
@@ -240,7 +264,12 @@ def extract_document(name: str) -> dict:
 			)
 		)
 
-	text = _get_document_text(doc)
+	try:
+		text = _get_document_text(doc)
+	except DocumentReadError as e:
+		# the file is unreadable, not the operator's configuration: record it
+		# like any other failure so the enqueued path leaves a trace too
+		return _mark_failed(doc, str(e))
 
 	try:
 		provider = get_provider()

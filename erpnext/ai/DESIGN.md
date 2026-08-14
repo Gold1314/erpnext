@@ -115,13 +115,20 @@ uses it — so no new dependency is introduced. `_pdf_text` imports it
 locally and, if a stripped-down install lacks it, says so plainly instead
 of staging an empty extraction.
 
-Two cases are reported rather than silently producing garbage:
+Failures are separated by whose problem they are:
 
-- **pdfplumber missing** — explicit "install it, or paste the text" error.
-- **No text layer** (a scan) — explicit "run it through OCR first" error,
-  because sending an empty document to the model would burn a call and
-  stage a meaningless extraction. OCR is deliberately out of scope; the
-  right place for it is a preprocessing step, not this module.
+- **pdfplumber missing** — an install problem, so it *throws*: the operator
+  fixes it once and every document benefits.
+- **Unreadable file** (encrypted, password-protected, corrupt) and **no text
+  layer** (a scan) — properties of the document, so they raise
+  `DocumentReadError`, which `extract_document` records as status *Failed*
+  with the reason on the document.
+
+That split matters on the enqueued path: a raised exception would kill the
+background job and leave the document in *Pending Extraction* with nothing
+to show for it, whereas *Failed* is visible in the queue report and can be
+retried after the operator pastes the text. OCR is deliberately out of
+scope; the right place for it is a preprocessing step, not this module.
 
 Plain-text attachments (`.txt`/`.csv`/`.md`/`.text`) are read via
 `File.get_content()` (the pattern used by `chart_of_accounts_importer` and
