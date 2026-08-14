@@ -44,6 +44,8 @@ modules harder than duplicating fifteen documented lines.
 
 from __future__ import annotations
 
+import io
+
 import frappe
 from frappe import _
 from frappe.utils import flt, today
@@ -61,8 +63,8 @@ CREATABLE_STATUSES = ("Extracted", "Needs Review")
 #: statuses from which (re-)extraction is allowed
 EXTRACTABLE_STATUSES = ("Pending Extraction", "Extracted", "Needs Review", "Failed")
 
-#: text file extensions read directly from an attached File; PDFs are
-#: refused honestly — no PDF text-extraction library ships with v1
+#: text file extensions read directly from an attached File; PDFs go
+#: through pdfplumber (a declared ERPNext dependency) in :func:`_pdf_text`
 TEXT_FILE_EXTENSIONS = (".txt", ".csv", ".md", ".text")
 
 #: same rounding tolerance as erpnext.edi.inbound.api.AMOUNT_TOLERANCE
@@ -72,15 +74,58 @@ AMOUNT_TOLERANCE = 0.02
 # -------------------------------------------------------------- extraction
 
 
+def _pdf_text(file_url: str) -> str:
+	"""Text layer of an attached PDF, via pdfplumber.
+
+	``pdfplumber`` is a declared ERPNext dependency (the bank statement
+	importer relies on it), so it is normally present. The import stays local
+	and the absence is reported honestly rather than staging an empty
+	extraction, because a stripped-down install can still lack it.
+
+	A scanned PDF with no text layer yields nothing: that is an OCR problem,
+	not an extraction bug, and is reported as such instead of sending an empty
+	document to the model.
+	"""
+	try:
+		import pdfplumber
+	except ImportError:
+		frappe.throw(
+			_(
+				"PDF text extraction needs the pdfplumber package, which is not installed. "
+				"Install it, or paste the invoice text into Raw Text."
+			),
+			title=_("PDF Extraction Unavailable"),
+		)
+
+	file_doc = frappe.get_doc("File", {"file_url": file_url})
+	content = file_doc.get_content()
+	if isinstance(content, str):
+		content = content.encode("utf-8", errors="replace")
+
+	pages = []
+	with pdfplumber.open(io.BytesIO(content)) as pdf:
+		for page in pdf.pages:
+			pages.append(page.extract_text() or "")
+
+	text = "\n".join(pages).strip()
+	if not text:
+		frappe.throw(
+			_(
+				"No text layer was found in this PDF — it is most likely a scan. "
+				"Run it through OCR first, or paste the invoice text into Raw Text."
+			),
+			title=_("No Text in PDF"),
+		)
+	return text
+
+
 def _get_document_text(doc) -> str:
 	"""The text to feed the model, per ``source_type``.
 
 	*Pasted Text* / *Email* read ``raw_text``. *File* reads the attached
-	File's content when it is a plain-text format; the text is copied into
-	``raw_text`` so the document carries what the model actually saw. PDFs
-	are refused with an honest message: no PDF text extractor (pdfplumber /
-	pypdf) is available in this environment, and pretending otherwise would
-	stage empty extractions.
+	File's content when it is a plain-text format, or extracts the text layer
+	of a PDF via :func:`_pdf_text`. Either way the text is copied into
+	``raw_text`` so the document carries what the model actually saw.
 	"""
 	if doc.source_type == "File":
 		if doc.raw_text:
@@ -90,13 +135,9 @@ def _get_document_text(doc) -> str:
 
 		file_name = (doc.source_file or "").lower()
 		if file_name.endswith(".pdf"):
-			frappe.throw(
-				_(
-					"PDF text extraction is not available in this version — copy the invoice text "
-					"out of the PDF and paste it into Raw Text."
-				),
-				title=_("PDF Not Supported Yet"),
-			)
+			text = _pdf_text(doc.source_file)
+			doc.raw_text = text  # what the model saw becomes part of the audit trail
+			return text
 		if not file_name.endswith(TEXT_FILE_EXTENSIONS):
 			frappe.throw(
 				_("Only plain-text files ({0}) can be read directly; paste other formats into Raw Text.").format(

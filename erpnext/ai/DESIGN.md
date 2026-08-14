@@ -107,16 +107,26 @@ Provider failures never raise out of `extract_document`: status → `Failed`
 with the message in `warnings`, making the function safe for
 `frappe.enqueue` (`extract_document_async`, long queue, deduplicated job id).
 
-## PDF decision (v1, honest)
+## PDF handling
 
-No PDF text-extraction library is importable in this environment
-(`pdfplumber`, `pypdf`, `PyPDF2`, `fitz` all absent; `frappe.utils.pdf` is a
-*generator* built on pdfkit, not an extractor). Therefore v1 accepts text
-sources only — `.txt`/`.csv`/`.md`/`.text` attachments are read via
+PDF text is extracted with **pdfplumber**, which is already a declared
+ERPNext dependency (`pyproject.toml`) because the bank statement importer
+uses it — so no new dependency is introduced. `_pdf_text` imports it
+locally and, if a stripped-down install lacks it, says so plainly instead
+of staging an empty extraction.
+
+Two cases are reported rather than silently producing garbage:
+
+- **pdfplumber missing** — explicit "install it, or paste the text" error.
+- **No text layer** (a scan) — explicit "run it through OCR first" error,
+  because sending an empty document to the model would burn a call and
+  stage a meaningless extraction. OCR is deliberately out of scope; the
+  right place for it is a preprocessing step, not this module.
+
+Plain-text attachments (`.txt`/`.csv`/`.md`/`.text`) are read via
 `File.get_content()` (the pattern used by `chart_of_accounts_importer` and
-`bank_statement_import_log`); `.pdf` is refused with an explicit message
-telling the operator to paste the text. Adding `pypdf` to pyproject
-dependencies is the natural v1.1.
+`bank_statement_import_log`). Whatever text is extracted is copied to
+`raw_text`, so the document always carries exactly what the model saw.
 
 ## Recommended hooks (documented, NOT applied — hooks.py is out of scope)
 
