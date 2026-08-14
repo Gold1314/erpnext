@@ -1,0 +1,65 @@
+{
+ "actions": [],
+ "creation": "2026-08-13 10:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "account",
+  "debit",
+  "credit",
+  "source_rule"
+ ],
+ "fields": [
+  {
+   "columns": 4,
+   "fieldname": "account",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Account",
+   "options": "Account",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "columns": 2,
+   "fieldname": "debit",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Debit",
+   "options": "Company:company:default_currency",
+   "read_only": 1
+  },
+  {
+   "columns": 2,
+   "fieldname": "credit",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Credit",
+   "options": "Company:company:default_currency",
+   "read_only": 1
+  },
+  {
+   "columns": 2,
+   "description": "Set when exactly one Accounting Policy Rule produced this line; consolidated lines list all contributing rules in the Journal Entry remark.",
+   "fieldname": "source_rule",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Source Rule",
+   "options": "Accounting Policy Rule",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-08-13 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Accounts",
+ "name": "Finance Book Adjustment Line",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}

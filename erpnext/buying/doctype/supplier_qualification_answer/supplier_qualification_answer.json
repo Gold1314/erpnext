@@ -1,0 +1,107 @@
+{
+ "actions": [],
+ "creation": "2026-08-13 10:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "question",
+  "category",
+  "column_break_answer",
+  "weight",
+  "max_score",
+  "score",
+  "is_knockout",
+  "passed",
+  "section_break_remarks",
+  "remarks"
+ ],
+ "fields": [
+  {
+   "columns": 4,
+   "fieldname": "question",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Question",
+   "reqd": 1
+  },
+  {
+   "columns": 1,
+   "fieldname": "category",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Category",
+   "options": "Financial\nQuality\nCompliance\nCapability\nSustainability"
+  },
+  {
+   "fieldname": "column_break_answer",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "1",
+   "fieldname": "weight",
+   "fieldtype": "Float",
+   "label": "Weight",
+   "read_only": 1
+  },
+  {
+   "columns": 1,
+   "default": "5",
+   "fieldname": "max_score",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Max Score",
+   "read_only": 1
+  },
+  {
+   "columns": 1,
+   "default": "0",
+   "description": "Between 0 and the max score.",
+   "fieldname": "score",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Score"
+  },
+  {
+   "columns": 1,
+   "default": "0",
+   "fieldname": "is_knockout",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Knockout",
+   "read_only": 1
+  },
+  {
+   "columns": 1,
+   "default": "1",
+   "description": "Uncheck to fail this question. Failing a knockout question rejects the supplier.",
+   "fieldname": "passed",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Passed"
+  },
+  {
+   "fieldname": "section_break_remarks",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-08-13 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Buying",
+ "name": "Supplier Qualification Answer",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

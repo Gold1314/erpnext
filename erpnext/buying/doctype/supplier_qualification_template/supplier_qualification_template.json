@@ -1,0 +1,155 @@
+{
+ "actions": [],
+ "autoname": "field:template_name",
+ "creation": "2026-08-13 10:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "template_name",
+  "supplier_group",
+  "enabled",
+  "column_break_thresholds",
+  "pass_threshold",
+  "low_risk_threshold",
+  "medium_risk_threshold",
+  "questions_section",
+  "questions",
+  "documents_section",
+  "required_documents"
+ ],
+ "fields": [
+  {
+   "fieldname": "template_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Template Name",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "description": "Leave blank to make the template usable for any supplier group.",
+   "fieldname": "supplier_group",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Supplier Group",
+   "options": "Supplier Group"
+  },
+  {
+   "default": "1",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Enabled"
+  },
+  {
+   "fieldname": "column_break_thresholds",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "70",
+   "description": "Weighted score at or above which the supplier is qualified (knockout questions still override).",
+   "fieldname": "pass_threshold",
+   "fieldtype": "Percent",
+   "label": "Pass Threshold"
+  },
+  {
+   "default": "85",
+   "description": "Score at or above this is Low risk.",
+   "fieldname": "low_risk_threshold",
+   "fieldtype": "Percent",
+   "label": "Low Risk Threshold"
+  },
+  {
+   "default": "70",
+   "description": "Score at or above this (but below the low-risk threshold) is Medium risk; anything lower is High risk.",
+   "fieldname": "medium_risk_threshold",
+   "fieldtype": "Percent",
+   "label": "Medium Risk Threshold"
+  },
+  {
+   "description": "Weighted percent = sum(score x weight) / sum(max score x weight). A failed knockout question rejects the supplier regardless of the score.",
+   "fieldname": "questions_section",
+   "fieldtype": "Section Break",
+   "label": "Questionnaire"
+  },
+  {
+   "fieldname": "questions",
+   "fieldtype": "Table",
+   "label": "Questions",
+   "options": "Supplier Qualification Template Item"
+  },
+  {
+   "fieldname": "documents_section",
+   "fieldtype": "Section Break",
+   "label": "Required Documents"
+  },
+  {
+   "fieldname": "required_documents",
+   "fieldtype": "Table",
+   "label": "Required Documents",
+   "options": "Supplier Document Requirement"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [
+  {
+   "link_doctype": "Supplier Qualification",
+   "link_fieldname": "template"
+  }
+ ],
+ "modified": "2026-08-13 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Buying",
+ "name": "Supplier Qualification Template",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Purchase Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Purchase User",
+   "share": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts Manager",
+   "share": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

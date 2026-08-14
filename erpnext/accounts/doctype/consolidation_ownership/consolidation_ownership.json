@@ -1,0 +1,134 @@
+{
+ "actions": [],
+ "autoname": "format:CONS-OWN-{#####}",
+ "creation": "2026-08-13 12:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "parent_company",
+  "subsidiary",
+  "column_break_ownership",
+  "ownership_percent",
+  "consolidation_method",
+  "effectivity_section",
+  "effective_from",
+  "column_break_effectivity",
+  "effective_to"
+ ],
+ "fields": [
+  {
+   "fieldname": "parent_company",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Parent Company",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
+   "fieldname": "subsidiary",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Subsidiary",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_ownership",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "ownership_percent",
+   "fieldtype": "Percent",
+   "in_list_view": 1,
+   "label": "Ownership Percent",
+   "reqd": 1
+  },
+  {
+   "default": "Full",
+   "description": "Full: consolidate 100% line by line with a minority interest line for the outside share. Equity: do not consolidate line by line (equity pickup is a v2 feature; the engine skips equity-method subsidiaries with a warning).",
+   "fieldname": "consolidation_method",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Consolidation Method",
+   "options": "Full\nEquity"
+  },
+  {
+   "fieldname": "effectivity_section",
+   "fieldtype": "Section Break",
+   "label": "Effectivity"
+  },
+  {
+   "fieldname": "effective_from",
+   "fieldtype": "Date",
+   "label": "Effective From"
+  },
+  {
+   "fieldname": "column_break_effectivity",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Leave blank if the stake is still held.",
+   "fieldname": "effective_to",
+   "fieldtype": "Date",
+   "label": "Effective To"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-08-13 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Accounts",
+ "name": "Consolidation Ownership",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts User",
+   "share": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Auditor",
+   "share": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

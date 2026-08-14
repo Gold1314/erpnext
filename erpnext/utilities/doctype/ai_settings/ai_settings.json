@@ -1,0 +1,95 @@
+{
+ "actions": [],
+ "creation": "2026-08-13 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "provider_section",
+  "provider_type",
+  "base_url",
+  "column_break_provider",
+  "model",
+  "api_key",
+  "request_timeout",
+  "sovereignty_section",
+  "sovereignty_note"
+ ],
+ "fields": [
+  {
+   "fieldname": "provider_section",
+   "fieldtype": "Section Break",
+   "label": "LLM Provider"
+  },
+  {
+   "default": "OpenAI Compatible",
+   "description": "OpenAI Compatible covers OpenAI itself and any self-hosted vLLM, Ollama, LiteLLM or llama.cpp endpoint speaking the /chat/completions dialect.",
+   "fieldname": "provider_type",
+   "fieldtype": "Select",
+   "label": "Provider Type",
+   "options": "OpenAI Compatible\nAnthropic"
+  },
+  {
+   "depends_on": "eval: doc.provider_type",
+   "description": "For OpenAI Compatible: the API root ending in /v1 (e.g. https://api.openai.com/v1 or http://localhost:11434/v1). For Anthropic: leave blank to use https://api.anthropic.com.",
+   "fieldname": "base_url",
+   "fieldtype": "Data",
+   "label": "Base URL"
+  },
+  {
+   "fieldname": "column_break_provider",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Model identifier as the provider expects it (e.g. gpt-4o-mini, claude-sonnet-4-5, qwen2.5-72b-instruct)",
+   "fieldname": "model",
+   "fieldtype": "Data",
+   "label": "Model"
+  },
+  {
+   "description": "Optional for keyless self-hosted OpenAI-compatible servers; required for Anthropic.",
+   "fieldname": "api_key",
+   "fieldtype": "Password",
+   "label": "API Key"
+  },
+  {
+   "default": "120",
+   "description": "Seconds to wait for the model before the extraction is marked Failed",
+   "fieldname": "request_timeout",
+   "fieldtype": "Int",
+   "label": "Request Timeout (Seconds)"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "sovereignty_section",
+   "fieldtype": "Section Break",
+   "label": "Data Sovereignty"
+  },
+  {
+   "fieldname": "sovereignty_note",
+   "fieldtype": "HTML",
+   "label": "Note",
+   "options": "<p>Document intake sends the <b>full text of supplier documents</b> to the configured endpoint. To keep that data on your own infrastructure, point an <i>OpenAI Compatible</i> provider at a self-hosted model server (vLLM, Ollama, LiteLLM, llama.cpp). No provider is hard-wired and nothing is sent anywhere until an extraction is explicitly triggered.</p>"
+  }
+ ],
+ "issingle": 1,
+ "links": [],
+ "modified": "2026-08-13 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Utilities",
+ "name": "AI Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

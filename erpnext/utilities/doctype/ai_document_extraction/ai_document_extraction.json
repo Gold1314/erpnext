@@ -1,0 +1,321 @@
+{
+ "actions": [],
+ "autoname": "format:AIDOC-{#####}",
+ "creation": "2026-08-13 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "company",
+  "source_type",
+  "source_file",
+  "column_break_header",
+  "status",
+  "provider_used",
+  "model_used",
+  "confidence_threshold",
+  "section_break_source_text",
+  "raw_text",
+  "section_break_supplier",
+  "supplier",
+  "supplier_name_extracted",
+  "supplier_vat",
+  "column_break_invoice",
+  "invoice_number",
+  "invoice_date",
+  "due_date",
+  "section_break_amounts",
+  "currency",
+  "net_total",
+  "tax_total",
+  "column_break_amounts",
+  "grand_total",
+  "section_break_items",
+  "items",
+  "section_break_taxes",
+  "taxes",
+  "section_break_review",
+  "needs_review_fields",
+  "column_break_review",
+  "warnings",
+  "section_break_result",
+  "purchase_invoice",
+  "column_break_result",
+  "extraction_json"
+ ],
+ "fields": [
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "default": "Pasted Text",
+   "fieldname": "source_type",
+   "fieldtype": "Select",
+   "in_standard_filter": 1,
+   "label": "Source Type",
+   "options": "Pasted Text\nFile\nEmail"
+  },
+  {
+   "depends_on": "eval: doc.source_type == 'File'",
+   "description": "Plain-text sources (.txt, .csv, .md) are read directly. PDFs need their text pasted into Raw Text — no PDF text extractor is bundled in v1.",
+   "fieldname": "source_file",
+   "fieldtype": "Attach",
+   "label": "Source File"
+  },
+  {
+   "fieldname": "column_break_header",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Pending Extraction",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "options": "Pending Extraction\nExtracted\nNeeds Review\nInvoice Created\nFailed\nRejected",
+   "search_index": 1
+  },
+  {
+   "fieldname": "provider_used",
+   "fieldtype": "Data",
+   "label": "Provider Used",
+   "read_only": 1
+  },
+  {
+   "fieldname": "model_used",
+   "fieldtype": "Data",
+   "label": "Model Used",
+   "read_only": 1
+  },
+  {
+   "default": "80",
+   "description": "Extracted fields whose model confidence falls below this land in Needs Review",
+   "fieldname": "confidence_threshold",
+   "fieldtype": "Percent",
+   "label": "Confidence Threshold"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "section_break_source_text",
+   "fieldtype": "Section Break",
+   "label": "Document Text"
+  },
+  {
+   "description": "The document text sent to the model — the audit original for pasted and e-mail sources",
+   "fieldname": "raw_text",
+   "fieldtype": "Long Text",
+   "label": "Raw Text"
+  },
+  {
+   "fieldname": "section_break_supplier",
+   "fieldtype": "Section Break",
+   "label": "Extracted Invoice"
+  },
+  {
+   "description": "Resolved from the extracted VAT ID, then by name. Editable — resolution may need a human.",
+   "fieldname": "supplier",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Supplier",
+   "options": "Supplier",
+   "search_index": 1
+  },
+  {
+   "description": "Supplier name exactly as the model read it from the document",
+   "fieldname": "supplier_name_extracted",
+   "fieldtype": "Data",
+   "label": "Supplier Name (extracted)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "supplier_vat",
+   "fieldtype": "Data",
+   "label": "Supplier VAT ID"
+  },
+  {
+   "fieldname": "column_break_invoice",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Becomes the Supplier Invoice No (bill_no) on the Purchase Invoice",
+   "fieldname": "invoice_number",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Supplier Invoice No",
+   "search_index": 1
+  },
+  {
+   "fieldname": "invoice_date",
+   "fieldtype": "Date",
+   "label": "Invoice Date"
+  },
+  {
+   "fieldname": "due_date",
+   "fieldtype": "Date",
+   "label": "Due Date"
+  },
+  {
+   "fieldname": "section_break_amounts",
+   "fieldtype": "Section Break",
+   "label": "Amounts"
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "label": "Currency",
+   "options": "Currency"
+  },
+  {
+   "fieldname": "net_total",
+   "fieldtype": "Currency",
+   "label": "Net Total",
+   "options": "currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "tax_total",
+   "fieldtype": "Currency",
+   "label": "Tax Total",
+   "options": "currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_amounts",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "grand_total",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Grand Total",
+   "options": "currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_items",
+   "fieldtype": "Section Break",
+   "label": "Lines"
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "label": "Items",
+   "options": "AI Document Extraction Item"
+  },
+  {
+   "fieldname": "section_break_taxes",
+   "fieldtype": "Section Break",
+   "label": "Tax Breakdown"
+  },
+  {
+   "fieldname": "taxes",
+   "fieldtype": "Table",
+   "label": "Taxes",
+   "options": "AI Document Extraction Tax"
+  },
+  {
+   "fieldname": "section_break_review",
+   "fieldtype": "Section Break",
+   "label": "Review"
+  },
+  {
+   "description": "Fields that were missing, ambiguous or below the confidence threshold",
+   "fieldname": "needs_review_fields",
+   "fieldtype": "Small Text",
+   "label": "Needs Review",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_review",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Coercions and cross-check mismatches from validation, or the failure reason when the extraction failed",
+   "fieldname": "warnings",
+   "fieldtype": "Small Text",
+   "label": "Warnings",
+   "read_only": 1
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "section_break_result",
+   "fieldtype": "Section Break",
+   "label": "Result"
+  },
+  {
+   "fieldname": "purchase_invoice",
+   "fieldtype": "Link",
+   "label": "Purchase Invoice",
+   "options": "Purchase Invoice",
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "column_break_result",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "The raw model output exactly as received — the audit trail for the extracted values",
+   "fieldname": "extraction_json",
+   "fieldtype": "Long Text",
+   "label": "Extraction JSON",
+   "read_only": 1
+  }
+ ],
+ "links": [],
+ "modified": "2026-08-13 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Utilities",
+ "name": "AI Document Extraction",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts User",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "invoice_number",
+ "track_changes": 1
+}

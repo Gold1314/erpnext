@@ -1,0 +1,187 @@
+{
+ "actions": [],
+ "creation": "2026-08-13 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "line_id",
+  "item_code",
+  "item_name",
+  "qty",
+  "uom",
+  "unit_price",
+  "line_net",
+  "column_break_codes",
+  "buyer_item_code",
+  "seller_item_code",
+  "order_line_ref",
+  "tax_rate",
+  "expense_account",
+  "section_break_description",
+  "description",
+  "section_break_match",
+  "matched_po",
+  "matched_po_detail",
+  "match_method",
+  "column_break_match",
+  "price_variance",
+  "qty_variance",
+  "within_tolerance"
+ ],
+ "fields": [
+  {
+   "description": "cbc:ID of the cac:InvoiceLine, as sent",
+   "fieldname": "line_id",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Line",
+   "read_only": 1
+  },
+  {
+   "description": "Resolved ERPNext item. Blank when the supplier's identifiers could not be resolved — set it before creating the Purchase Invoice.",
+   "fieldname": "item_code",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Item Code",
+   "options": "Item"
+  },
+  {
+   "fieldname": "item_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Item Name"
+  },
+  {
+   "fieldname": "qty",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Quantity"
+  },
+  {
+   "fieldname": "uom",
+   "fieldtype": "Link",
+   "label": "UOM",
+   "options": "UOM"
+  },
+  {
+   "fieldname": "unit_price",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Unit Price"
+  },
+  {
+   "description": "cbc:LineExtensionAmount — the net line total the supplier charged",
+   "fieldname": "line_net",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Line Net"
+  },
+  {
+   "fieldname": "column_break_codes",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "BT-156 BuyersItemIdentification — our item code as the supplier recorded it",
+   "fieldname": "buyer_item_code",
+   "fieldtype": "Data",
+   "label": "Buyer Item Code",
+   "read_only": 1
+  },
+  {
+   "description": "BT-155 SellersItemIdentification — the supplier's own part number",
+   "fieldname": "seller_item_code",
+   "fieldtype": "Data",
+   "label": "Seller Item Code",
+   "read_only": 1
+  },
+  {
+   "description": "BT-132 OrderLineReference — the ordered line number this invoice line refers to",
+   "fieldname": "order_line_ref",
+   "fieldtype": "Data",
+   "label": "Order Line Reference",
+   "read_only": 1
+  },
+  {
+   "fieldname": "tax_rate",
+   "fieldtype": "Percent",
+   "label": "Tax Rate"
+  },
+  {
+   "fieldname": "expense_account",
+   "fieldtype": "Link",
+   "label": "Expense Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "section_break_description",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description"
+  },
+  {
+   "fieldname": "section_break_match",
+   "fieldtype": "Section Break",
+   "label": "Purchase Order Match"
+  },
+  {
+   "fieldname": "matched_po",
+   "fieldtype": "Link",
+   "label": "Matched Purchase Order",
+   "options": "Purchase Order",
+   "read_only": 1
+  },
+  {
+   "description": "Row name of the matched Purchase Order Item (becomes po_detail on the Purchase Invoice)",
+   "fieldname": "matched_po_detail",
+   "fieldtype": "Data",
+   "label": "Matched PO Item",
+   "read_only": 1
+  },
+  {
+   "description": "item_code / order_line_ref / description / unmatched",
+   "fieldname": "match_method",
+   "fieldtype": "Data",
+   "label": "Match Method",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_match",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "price_variance",
+   "fieldtype": "Percent",
+   "label": "Price Variance",
+   "read_only": 1
+  },
+  {
+   "fieldname": "qty_variance",
+   "fieldtype": "Percent",
+   "label": "Quantity Variance",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "within_tolerance",
+   "fieldtype": "Check",
+   "label": "Within Tolerance",
+   "read_only": 1
+  }
+ ],
+ "istable": 1,
+ "links": [],
+ "modified": "2026-08-13 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "EDI",
+ "name": "Inbound E-Invoice Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

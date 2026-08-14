@@ -1,0 +1,209 @@
+{
+ "actions": [],
+ "autoname": "field:metric_key",
+ "creation": "2026-08-13 12:00:00.000000",
+ "description": "Governance record for one metric of the shipped KPI pack: whether it is reported, and the RAG bands it is graded against.",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "metric_key",
+  "label",
+  "enabled",
+  "column_break_identity",
+  "unit",
+  "direction",
+  "category",
+  "definition_section",
+  "formula_text",
+  "description",
+  "thresholds_section",
+  "company",
+  "green_min",
+  "amber_min",
+  "column_break_thresholds",
+  "red_max",
+  "threshold_help",
+  "notes_section",
+  "notes"
+ ],
+ "fields": [
+  {
+   "description": "Key of a metric in the shipped catalog (erpnext/analytics/registry.py). Unknown keys are rejected.",
+   "fieldname": "metric_key",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Metric Key",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "description": "Defaults to the catalog label when left empty.",
+   "fieldname": "label",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Label"
+  },
+  {
+   "default": "1",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "label": "Enabled"
+  },
+  {
+   "fieldname": "column_break_identity",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Synced from the catalog on save.",
+   "fieldname": "unit",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Unit",
+   "read_only": 1
+  },
+  {
+   "description": "Synced from the catalog on save. Decides which side of a threshold is good.",
+   "fieldname": "direction",
+   "fieldtype": "Data",
+   "label": "Direction",
+   "read_only": 1
+  },
+  {
+   "description": "Synced from the catalog on save.",
+   "fieldname": "category",
+   "fieldtype": "Data",
+   "in_standard_filter": 1,
+   "label": "Category",
+   "read_only": 1
+  },
+  {
+   "fieldname": "definition_section",
+   "fieldtype": "Section Break",
+   "label": "Definition"
+  },
+  {
+   "description": "The governed formula. Synced from the catalog on save - edit erpnext/analytics/registry.py to change it, never this field.",
+   "fieldname": "formula_text",
+   "fieldtype": "Small Text",
+   "label": "Formula",
+   "read_only": 1
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description",
+   "read_only": 1
+  },
+  {
+   "fieldname": "thresholds_section",
+   "fieldtype": "Section Break",
+   "label": "Thresholds"
+  },
+  {
+   "description": "Leave empty to apply these thresholds to every company.",
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Company",
+   "options": "Company"
+  },
+  {
+   "description": "Value at or better than this is Green.",
+   "fieldname": "green_min",
+   "fieldtype": "Float",
+   "label": "Green Boundary",
+   "precision": "6"
+  },
+  {
+   "description": "Value at or better than this (but short of Green) is Amber.",
+   "fieldname": "amber_min",
+   "fieldtype": "Float",
+   "label": "Amber Boundary",
+   "precision": "6"
+  },
+  {
+   "fieldname": "column_break_thresholds",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Hard bound: a value beyond this is always Red.",
+   "fieldname": "red_max",
+   "fieldtype": "Float",
+   "label": "Red Bound",
+   "precision": "6"
+  },
+  {
+   "fieldname": "threshold_help",
+   "fieldtype": "HTML",
+   "label": "Threshold Help",
+   "options": "<p class=\"text-muted small\">Boundaries are read according to the metric's direction. <b>higher_is_better</b>: Green when value &ge; Green Boundary, Amber when value &ge; Amber Boundary, otherwise Red. <b>lower_is_better</b>: Green when value &le; Green Boundary, Amber when value &le; Amber Boundary, otherwise Red. <b>neutral</b> metrics are never graded. Leaving all three at 0 means \"not configured\": the shipped default applies, and where there is no shipped default the status is Unknown. A boundary of 0 counts as a real bound only for Count metrics.</p>"
+  },
+  {
+   "fieldname": "notes_section",
+   "fieldtype": "Section Break",
+   "label": "Notes"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "Notes"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-08-13 12:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Accounts",
+ "name": "Metric Definition",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts User",
+   "share": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Auditor",
+   "share": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "label",
+ "track_changes": 1
+}

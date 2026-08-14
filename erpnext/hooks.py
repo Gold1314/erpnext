@@ -495,6 +495,7 @@ scheduler_events = {
 	"daily": [],
 	"daily_long": [],
 	"daily_maintenance": [
+		"erpnext.accounts.doctype.sod_rule.sod_rule.run_sod_scan",
 		"erpnext.support.doctype.issue.issue.auto_close_tickets",
 		"erpnext.crm.doctype.opportunity.opportunity.auto_close_opportunity",
 		"erpnext.controllers.accounts_controller.update_invoice_status",
@@ -517,6 +518,7 @@ scheduler_events = {
 		"erpnext.accounts.doctype.process_statement_of_accounts.process_statement_of_accounts.send_auto_email",
 		"erpnext.accounts.utils.auto_create_exchange_rate_revaluation_daily",
 		"erpnext.accounts.utils.run_ledger_health_checks",
+		"erpnext.accounts.anomaly.scanner.run_scheduled_scan",
 		"erpnext.assets.doctype.asset_maintenance_log.asset_maintenance_log.update_asset_maintenance_log_status",
 		"erpnext.stock.reorder_item.reorder_item",
 		"erpnext.accounts.doctype.process_subscription.process_subscription.create_subscription_process",
@@ -532,6 +534,8 @@ scheduler_events = {
 	"monthly_long": [
 		"erpnext.accounts.deferred_revenue.process_deferred_accounting",
 		"erpnext.accounts.utils.auto_create_exchange_rate_revaluation_monthly",
+		"erpnext.accounts.doctype.revenue_contract.revenue_contract.process_revenue_recognition",
+		"erpnext.assets.doctype.lease_contract.lease_contract.post_scheduled_lease_entries",
 	],
 }
 

@@ -1,0 +1,61 @@
+{
+ "actions": [],
+ "creation": "2026-08-13 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "category_code",
+  "rate_pct",
+  "taxable_amount",
+  "tax_amount",
+  "account_head"
+ ],
+ "fields": [
+  {
+   "description": "UNCL5305 VAT category (S standard, Z zero-rated, E exempt, AE reverse charge, ...)",
+   "fieldname": "category_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Category Code"
+  },
+  {
+   "fieldname": "rate_pct",
+   "fieldtype": "Percent",
+   "in_list_view": 1,
+   "label": "Rate"
+  },
+  {
+   "fieldname": "taxable_amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Taxable Amount"
+  },
+  {
+   "fieldname": "tax_amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Tax Amount"
+  },
+  {
+   "description": "Account the tax is booked to on the generated Purchase Invoice",
+   "fieldname": "account_head",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Account Head",
+   "options": "Account"
+  }
+ ],
+ "istable": 1,
+ "links": [],
+ "modified": "2026-08-13 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "EDI",
+ "name": "Inbound E-Invoice Tax",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

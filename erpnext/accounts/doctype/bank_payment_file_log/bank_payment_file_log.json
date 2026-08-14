@@ -1,0 +1,189 @@
+{
+ "actions": [],
+ "autoname": "format:BPAY-{#####}",
+ "creation": "2026-08-13 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "payment_order",
+  "profile",
+  "pain_variant",
+  "column_break_main",
+  "status",
+  "file_url",
+  "section_break_totals",
+  "number_of_transactions",
+  "control_sum",
+  "column_break_totals",
+  "currency",
+  "section_break_timing",
+  "generated_on",
+  "column_break_timing",
+  "transmitted_on",
+  "section_break_detail",
+  "warnings",
+  "remarks"
+ ],
+ "fields": [
+  {
+   "fieldname": "payment_order",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Payment Order",
+   "options": "Payment Order",
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "profile",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Bank Payment Profile",
+   "options": "Bank Payment Profile"
+  },
+  {
+   "description": "ISO 20022 message version used for this file",
+   "fieldname": "pain_variant",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "pain.001 Variant",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_main",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Generated",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "options": "Generated\nTransmitted\nFailed"
+  },
+  {
+   "fieldname": "file_url",
+   "fieldtype": "Data",
+   "label": "File URL",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_totals",
+   "fieldtype": "Section Break",
+   "label": "Control Totals"
+  },
+  {
+   "description": "GrpHdr/NbOfTxs as written to the file",
+   "fieldname": "number_of_transactions",
+   "fieldtype": "Int",
+   "label": "Number of Transactions",
+   "read_only": 1
+  },
+  {
+   "description": "GrpHdr/CtrlSum as written to the file. Check this against the bank portal after upload.",
+   "fieldname": "control_sum",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Control Sum",
+   "options": "currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_totals",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "label": "Currency",
+   "options": "Currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_timing",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "generated_on",
+   "fieldtype": "Datetime",
+   "label": "Generated On",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_timing",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "transmitted_on",
+   "fieldtype": "Datetime",
+   "label": "Transmitted On",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_detail",
+   "fieldtype": "Section Break"
+  },
+  {
+   "description": "Fallback decisions taken by the mapper during generation",
+   "fieldname": "warnings",
+   "fieldtype": "Small Text",
+   "label": "Warnings",
+   "read_only": 1
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks"
+  }
+ ],
+ "in_create": 1,
+ "links": [],
+ "modified": "2026-08-13 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Accounts",
+ "name": "Bank Payment File Log",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts User"
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "payment_order",
+ "track_changes": 1
+}

@@ -11,7 +11,10 @@
   "uom",
   "delivery_date",
   "demand_qty",
-  "warehouse"
+  "warehouse",
+  "forecast_model",
+  "mape",
+  "bias"
  ],
  "fields": [
   {
@@ -69,6 +72,26 @@
    "in_list_view": 1,
    "label": "Warehouse",
    "options": "Warehouse",
+   "read_only": 1
+  },
+  {
+   "fieldname": "forecast_model",
+   "fieldtype": "Data",
+   "label": "Forecast Model",
+   "read_only": 1
+  },
+  {
+   "description": "Mean absolute percentage error of the selected model in backtesting.",
+   "fieldname": "mape",
+   "fieldtype": "Percent",
+   "label": "MAPE",
+   "read_only": 1
+  },
+  {
+   "description": "Mean forecast error / mean actual demand. Positive values indicate over-forecasting.",
+   "fieldname": "bias",
+   "fieldtype": "Float",
+   "label": "Bias",
    "read_only": 1
   }
  ],

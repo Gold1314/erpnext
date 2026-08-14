@@ -1,0 +1,159 @@
+{
+ "actions": [],
+ "autoname": "format:SOD-VIO-{#####}",
+ "creation": "2026-08-13 10:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "user",
+  "sod_rule",
+  "risk_level",
+  "detected_on",
+  "column_break_roles",
+  "first_function_roles",
+  "second_function_roles",
+  "resolution_section",
+  "status",
+  "mitigation_notes",
+  "column_break_resolution",
+  "resolved_by",
+  "resolved_on"
+ ],
+ "fields": [
+  {
+   "fieldname": "user",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "User",
+   "options": "User",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "sod_rule",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "SoD Rule",
+   "options": "SoD Rule",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fetch_from": "sod_rule.risk_level",
+   "fieldname": "risk_level",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Risk Level",
+   "options": "High\nMedium\nLow",
+   "read_only": 1
+  },
+  {
+   "fieldname": "detected_on",
+   "fieldtype": "Datetime",
+   "label": "Detected On",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_roles",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "first_function_roles",
+   "fieldtype": "Small Text",
+   "label": "First Function Roles",
+   "read_only": 1
+  },
+  {
+   "fieldname": "second_function_roles",
+   "fieldtype": "Small Text",
+   "label": "Second Function Roles",
+   "read_only": 1
+  },
+  {
+   "fieldname": "resolution_section",
+   "fieldtype": "Section Break",
+   "label": "Resolution"
+  },
+  {
+   "default": "Open",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "options": "Open\nMitigated\nAccepted\nResolved",
+   "reqd": 1
+  },
+  {
+   "fieldname": "mitigation_notes",
+   "fieldtype": "Text",
+   "label": "Mitigation Notes"
+  },
+  {
+   "fieldname": "column_break_resolution",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "resolved_by",
+   "fieldtype": "Link",
+   "label": "Resolved By",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "resolved_on",
+   "fieldtype": "Datetime",
+   "label": "Resolved On",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-08-13 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Accounts",
+ "name": "SoD Violation Log",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Auditor",
+   "share": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "user",
+ "track_changes": 1
+}

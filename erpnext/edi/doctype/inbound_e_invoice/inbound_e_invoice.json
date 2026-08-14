@@ -1,0 +1,290 @@
+{
+ "actions": [],
+ "autoname": "format:INEINV-{#####}",
+ "creation": "2026-08-13 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "company",
+  "supplier",
+  "supplier_name_parsed",
+  "supplier_vat",
+  "column_break_header",
+  "invoice_id",
+  "issue_date",
+  "due_date",
+  "order_reference",
+  "status",
+  "section_break_amounts",
+  "currency",
+  "net_total",
+  "tax_total",
+  "column_break_amounts",
+  "grand_total",
+  "tolerance_pct",
+  "section_break_items",
+  "items",
+  "section_break_taxes",
+  "taxes",
+  "section_break_result",
+  "warnings",
+  "column_break_result",
+  "exceptions",
+  "section_break_source",
+  "purchase_invoice",
+  "source_file",
+  "column_break_source",
+  "raw_profile"
+ ],
+ "fields": [
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "description": "Resolved from the seller's VAT ID, then by name. Editable — resolution may need a human.",
+   "fieldname": "supplier",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Supplier",
+   "options": "Supplier",
+   "search_index": 1
+  },
+  {
+   "description": "Seller name exactly as sent in the e-invoice",
+   "fieldname": "supplier_name_parsed",
+   "fieldtype": "Data",
+   "label": "Seller Name (as sent)",
+   "read_only": 1
+  },
+  {
+   "description": "BT-31 seller VAT identifier as sent",
+   "fieldname": "supplier_vat",
+   "fieldtype": "Data",
+   "label": "Seller VAT ID",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_header",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "BT-1 — becomes the Supplier Invoice No (bill_no) on the Purchase Invoice",
+   "fieldname": "invoice_id",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Supplier Invoice No",
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "issue_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Issue Date"
+  },
+  {
+   "fieldname": "due_date",
+   "fieldtype": "Date",
+   "label": "Due Date"
+  },
+  {
+   "description": "BT-13 OrderReference — the Purchase Order the supplier is invoicing against",
+   "fieldname": "order_reference",
+   "fieldtype": "Data",
+   "label": "Order Reference"
+  },
+  {
+   "default": "Pending Review",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "options": "Pending Review\nMatched\nException\nInvoice Created\nRejected",
+   "search_index": 1
+  },
+  {
+   "fieldname": "section_break_amounts",
+   "fieldtype": "Section Break",
+   "label": "Amounts"
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "label": "Currency",
+   "options": "Currency"
+  },
+  {
+   "fieldname": "net_total",
+   "fieldtype": "Currency",
+   "label": "Net Total",
+   "options": "currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "tax_total",
+   "fieldtype": "Currency",
+   "label": "Tax Total",
+   "options": "currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_amounts",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "grand_total",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Grand Total",
+   "options": "currency",
+   "read_only": 1
+  },
+  {
+   "default": "2",
+   "description": "Allowed price and quantity variance against the Purchase Order before a line is flagged.",
+   "fieldname": "tolerance_pct",
+   "fieldtype": "Percent",
+   "label": "Match Tolerance"
+  },
+  {
+   "fieldname": "section_break_items",
+   "fieldtype": "Section Break",
+   "label": "Lines"
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "label": "Items",
+   "options": "Inbound E-Invoice Item"
+  },
+  {
+   "fieldname": "section_break_taxes",
+   "fieldtype": "Section Break",
+   "label": "VAT Breakdown"
+  },
+  {
+   "fieldname": "taxes",
+   "fieldtype": "Table",
+   "label": "Taxes",
+   "options": "Inbound E-Invoice Tax"
+  },
+  {
+   "fieldname": "section_break_result",
+   "fieldtype": "Section Break",
+   "label": "Review"
+  },
+  {
+   "description": "Resolution fallbacks taken while mapping the document",
+   "fieldname": "warnings",
+   "fieldtype": "Small Text",
+   "label": "Warnings",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_result",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Validation failures and Purchase Order match exceptions",
+   "fieldname": "exceptions",
+   "fieldtype": "Small Text",
+   "label": "Exceptions",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_source",
+   "fieldtype": "Section Break",
+   "label": "Source"
+  },
+  {
+   "fieldname": "purchase_invoice",
+   "fieldtype": "Link",
+   "label": "Purchase Invoice",
+   "options": "Purchase Invoice",
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "description": "The raw UBL payload exactly as received — the audit original",
+   "fieldname": "source_file",
+   "fieldtype": "Attach",
+   "label": "Source File",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_source",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "CustomizationID (or ProfileID) claimed by the sender",
+   "fieldname": "raw_profile",
+   "fieldtype": "Data",
+   "label": "Profile",
+   "read_only": 1
+  }
+ ],
+ "links": [],
+ "modified": "2026-08-13 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "EDI",
+ "name": "Inbound E-Invoice",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts User",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Purchase Manager"
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "invoice_id",
+ "track_changes": 1
+}

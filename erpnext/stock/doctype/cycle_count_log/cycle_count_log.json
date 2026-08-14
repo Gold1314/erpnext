@@ -1,0 +1,150 @@
+{
+ "actions": [],
+ "autoname": "format:CCLOG-{#####}",
+ "creation": "2026-08-13 10:00:00.000000",
+ "description": "One row per (program, item): current ABC class, velocity, count schedule and the linked count sheet. Maintained by Cycle Count Program - treat as read-only.",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "program",
+  "item_code",
+  "warehouse",
+  "column_break_hqcs",
+  "abc_class",
+  "velocity_value",
+  "status",
+  "schedule_section",
+  "last_counted_on",
+  "next_due_on",
+  "column_break_swzl",
+  "stock_reconciliation"
+ ],
+ "fields": [
+  {
+   "fieldname": "program",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Cycle Count Program",
+   "options": "Cycle Count Program",
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "item_code",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Item",
+   "options": "Item",
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "warehouse",
+   "fieldtype": "Link",
+   "label": "Warehouse",
+   "options": "Warehouse"
+  },
+  {
+   "fieldname": "column_break_hqcs",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "abc_class",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "ABC Class",
+   "options": "\nA\nB\nC"
+  },
+  {
+   "description": "Outgoing consumption value over the program's lookback window.",
+   "fieldname": "velocity_value",
+   "fieldtype": "Currency",
+   "label": "Velocity Value"
+  },
+  {
+   "default": "Classified",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "options": "Classified\nScheduled\nCounted"
+  },
+  {
+   "fieldname": "schedule_section",
+   "fieldtype": "Section Break",
+   "label": "Count Schedule"
+  },
+  {
+   "fieldname": "last_counted_on",
+   "fieldtype": "Date",
+   "label": "Last Counted On"
+  },
+  {
+   "fieldname": "next_due_on",
+   "fieldtype": "Date",
+   "label": "Next Due On"
+  },
+  {
+   "fieldname": "column_break_swzl",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "stock_reconciliation",
+   "fieldtype": "Link",
+   "label": "Stock Reconciliation",
+   "options": "Stock Reconciliation"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-08-13 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Stock",
+ "name": "Cycle Count Log",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Stock Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Stock User"
+  }
+ ],
+ "row_format": "Dynamic",
+ "search_fields": "item_code,abc_class,status",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}

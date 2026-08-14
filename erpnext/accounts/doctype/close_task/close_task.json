@@ -1,0 +1,216 @@
+{
+ "actions": [],
+ "autoname": "format:CLTASK-{#####}",
+ "creation": "2026-08-13 10:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "close_cycle",
+  "task_title",
+  "task_type",
+  "column_break_head",
+  "status",
+  "owner_role",
+  "assigned_to",
+  "due_date",
+  "details_section",
+  "instructions",
+  "dependencies_section",
+  "dependencies",
+  "verification_section",
+  "auto_verify",
+  "verification_result",
+  "sign_off_section",
+  "signed_off_by",
+  "signed_off_on",
+  "column_break_sign_off",
+  "evidence"
+ ],
+ "fields": [
+  {
+   "fieldname": "close_cycle",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Close Cycle",
+   "options": "Close Cycle",
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "task_title",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Task Title",
+   "reqd": 1
+  },
+  {
+   "default": "Manual",
+   "fieldname": "task_type",
+   "fieldtype": "Select",
+   "in_standard_filter": 1,
+   "label": "Task Type",
+   "options": "Manual\nPeriod Closing Voucher\nExchange Rate Revaluation\nDeferred Accounting\nBank Reconciliation\nLedger Health\nAccounting Period Lock",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_head",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Pending",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "no_copy": 1,
+   "options": "Pending\nIn Progress\nBlocked\nCompleted\nSkipped"
+  },
+  {
+   "fieldname": "owner_role",
+   "fieldtype": "Link",
+   "label": "Owner Role",
+   "options": "Role"
+  },
+  {
+   "fieldname": "assigned_to",
+   "fieldtype": "Link",
+   "label": "Assigned To",
+   "options": "User"
+  },
+  {
+   "fieldname": "due_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Due Date"
+  },
+  {
+   "fieldname": "details_section",
+   "fieldtype": "Section Break",
+   "label": "Details"
+  },
+  {
+   "fieldname": "instructions",
+   "fieldtype": "Small Text",
+   "label": "Instructions"
+  },
+  {
+   "description": "This task can only be Completed once every dependency is Completed or Skipped.",
+   "fieldname": "dependencies_section",
+   "fieldtype": "Section Break",
+   "label": "Dependencies"
+  },
+  {
+   "fieldname": "dependencies",
+   "fieldtype": "Table",
+   "label": "Depends On",
+   "options": "Close Task Dependency"
+  },
+  {
+   "fieldname": "verification_section",
+   "fieldtype": "Section Break",
+   "label": "Verification"
+  },
+  {
+   "default": "0",
+   "fieldname": "auto_verify",
+   "fieldtype": "Check",
+   "label": "Auto Verify"
+  },
+  {
+   "fieldname": "verification_result",
+   "fieldtype": "Small Text",
+   "label": "Verification Result",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "sign_off_section",
+   "fieldtype": "Section Break",
+   "label": "Sign-off"
+  },
+  {
+   "fieldname": "signed_off_by",
+   "fieldtype": "Link",
+   "label": "Signed Off By",
+   "no_copy": 1,
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "signed_off_on",
+   "fieldtype": "Datetime",
+   "label": "Signed Off On",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_sign_off",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "evidence",
+   "fieldtype": "Attach",
+   "label": "Evidence"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-08-13 10:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Accounts",
+ "name": "Close Task",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts User",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Auditor",
+   "share": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "task_title",
+ "track_changes": 1
+}

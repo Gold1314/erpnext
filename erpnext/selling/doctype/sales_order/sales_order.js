@@ -139,6 +139,10 @@ frappe.ui.form.on("Sales Order", {
 				frm.events.get_items_from_internal_purchase_order(frm);
 			}
 
+			if (!frm.is_new()) {
+				frm.add_custom_button(__("Get Promise Dates"), () => frm.events.get_promise_dates(frm));
+			}
+
 			if (frm.doc.docstatus === 0 && !frm.doc.is_subcontracted) {
 				frappe.call({
 					method: "erpnext.selling.doctype.sales_order.sales_order.get_stock_reservation_status",
@@ -200,6 +204,65 @@ frappe.ui.form.on("Sales Order", {
 			},
 			__("Get Items From")
 		);
+	},
+
+	get_promise_dates(frm) {
+		frappe.call({
+			method: "erpnext.stock.promising.api.promise_sales_order",
+			args: { sales_order: frm.doc.name },
+			freeze: true,
+			freeze_message: __("Computing promise dates..."),
+			callback: (r) => {
+				if (!r.message || !r.message.length) return;
+				const rows = r.message;
+				const body = rows
+					.map((d) => {
+						const status = d.fulfillable
+							? `<span class="indicator-pill green">${__("OK")}</span>`
+							: `<span class="indicator-pill red">${__("Shortfall")}</span>`;
+						return `<tr>
+							<td>${frappe.utils.escape_html(d.item_code)}</td>
+							<td class="text-right">${d.qty}</td>
+							<td>${frappe.datetime.str_to_user(d.current_delivery_date) || ""}</td>
+							<td>${frappe.datetime.str_to_user(d.promised_date) || ""}</td>
+							<td>${status} ${frappe.utils.escape_html(d.message || "")}</td>
+						</tr>`;
+					})
+					.join("");
+
+				const dialog = new frappe.ui.Dialog({
+					title: __("Promise Dates"),
+					size: "large",
+					fields: [{ fieldtype: "HTML", fieldname: "promise_table" }],
+					primary_action_label: __("Apply Dates"),
+					primary_action: () => {
+						frappe.call({
+							method: "erpnext.stock.promising.api.apply_promise_dates",
+							args: { sales_order: frm.doc.name, rows: rows },
+							freeze: true,
+							callback: () => {
+								dialog.hide();
+								frm.reload_doc();
+							},
+						});
+					},
+				});
+
+				dialog.fields_dict.promise_table.$wrapper.html(
+					`<table class="table table-bordered">
+						<thead><tr>
+							<th>${__("Item")}</th>
+							<th class="text-right">${__("Qty")}</th>
+							<th>${__("Current Date")}</th>
+							<th>${__("Promised Date")}</th>
+							<th>${__("Status")}</th>
+						</tr></thead>
+						<tbody>${body}</tbody>
+					</table>`
+				);
+				dialog.show();
+			},
+		});
 	},
 
 	onload: function (frm) {
